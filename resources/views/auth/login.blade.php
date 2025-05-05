@@ -12,13 +12,13 @@
         <div class="relative w-full md:w-1/2">
             <div class="relative w-full h-64 md:h-full p-4">
                 <a href="{{ url('/') }}" class="absolute top-8 left-10 h-4 lg:top-12 lg:left-14">
-                    <img src="{{ asset('image/back icon.png') }}" alt="Back" class="w-6 h-6">
+                    <img src="{{ asset('storage/images/back icon.png') }}" alt="Back" class="w-6 h-6">
                 </a>
-                <img src="{{ asset('image/orang buang sampah.jpg') }}" alt="Background" class="w-full h-full object-cover rounded-xl">
+                <img src="{{ asset('storage/images/orang buang sampah.jpg') }}" alt="Background" class="w-full h-full object-cover rounded-xl">
                 
                 <div class="absolute bottom-10 left-10 lg:bottom-20 lg:left-14">
                     <div class="flex items-center mb-2">
-                        <img src="{{ asset('image/logo itrashy.png') }}" alt="I-Trashy Logo" class="w-8 lg:w-12">
+                        <img src="{{ asset('storage/images/logo itrashy.png') }}" alt="I-Trashy Logo" class="w-8 lg:w-12">
                     </div>
                     <h1 class="md:text-2xl font-bold text-white/80 mb-2">I-Trashy.</h1>
                     <p class="text-sm text-white/80 pr-20 lg:pr-0">Solusi pengelolaan sampah untuk rumah tangga dan bisnis</p>

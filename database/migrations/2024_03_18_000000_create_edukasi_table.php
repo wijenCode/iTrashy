@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('edukasi', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');   
             $table->string('judul_konten');
             $table->text('deskripsi');
+            $table->string('gambar')->nullable();
             $table->text('konten');
             $table->string('jenis_konten');
             $table->string('kategori');
@@ -28,5 +30,5 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('edukasi');
-    }
+}
 };
