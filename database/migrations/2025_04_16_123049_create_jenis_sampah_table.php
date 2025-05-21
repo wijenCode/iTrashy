@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('jenis_sampah', function (Blueprint $table) {
             $table->id();
             $table->string('nama_sampah');
-            $table->decimal('poin', 10, 2);
+            $table->integer('poin_per_kg');
+            $table->decimal('carbon_reduced', 10, 2);
             $table->string('gambar');
+            $table->string('kategori_sampah');
             $table->timestamps();
         });
     }

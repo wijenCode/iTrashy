@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('kota')->nullable();
             $table->string('kecamatan')->nullable();
             $table->string('foto_profile')->nullable();
-            $table->decimal('poin_terkumpul', 10, 2)->nullable();
+            $table->integer('poin_terkumpul')->nullable();
             $table->decimal('sampah_terkumpul', 10, 2)->nullable();
             $table->enum('level', ['newbie', 'explorer', 'warrior', 'master'])->default('newbie')->nullable();
             $table->enum('role', ['user', 'admin', 'driver']);

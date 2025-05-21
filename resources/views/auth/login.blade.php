@@ -12,13 +12,13 @@
         <div class="relative w-full md:w-1/2">
             <div class="relative w-full h-64 md:h-full p-4">
                 <a href="{{ url('/') }}" class="absolute top-8 left-10 h-4 lg:top-12 lg:left-14">
-                    <img src="{{ asset('image/back icon.png') }}" alt="Back" class="w-6 h-6">
+                    <img src="{{ asset('storage/images/back icon.png') }}" alt="Back" class="w-6 h-6">
                 </a>
-                <img src="{{ asset('image/orang buang sampah.jpg') }}" alt="Background" class="w-full h-full object-cover rounded-xl">
+                <img src="{{ asset('storage/images/orang buang sampah.jpg') }}" alt="Background" class="w-full h-full object-cover rounded-xl">
                 
                 <div class="absolute bottom-10 left-10 lg:bottom-20 lg:left-14">
                     <div class="flex items-center mb-2">
-                        <img src="{{ asset('image/logo itrashy.png') }}" alt="I-Trashy Logo" class="w-8 lg:w-12">
+                        <img src="{{ asset('storage/images/logo itrashy.png') }}" alt="I-Trashy Logo" class="w-8 lg:w-12">
                     </div>
                     <h1 class="md:text-2xl font-bold text-white/80 mb-2">I-Trashy.</h1>
                     <p class="text-sm text-white/80 pr-20 lg:pr-0">Solusi pengelolaan sampah untuk rumah tangga dan bisnis</p>
@@ -60,7 +60,7 @@
                         <input type="password" id="password" name="password" placeholder="Masukkan Password" required
                             class="w-full px-4 py-2 rounded-xl bg-[#f5f7fa] mt-2">
                         <button type="button" id="togglePassword" class="absolute right-6 pt-4 opacity-50">
-                            <img src="{{ asset('image/eye icon.png') }}" alt="show/hide" class="w-6">
+                            <img src="{{ asset('storage/images/eye icon.png') }}" alt="show/hide" class="w-6">
                         </button>
                     </div>
 
@@ -89,10 +89,10 @@
 
             if (input.type === 'password') {
                 input.type = 'text';
-                toggleIcon.src = '{{ asset('image/eye-slash.png') }}';  // Icon mata terbuka
+                toggleIcon.src = '{{ asset('storage/images/eye-slash.png') }}';  // Icon mata terbuka
             } else {
                 input.type = 'password';
-                toggleIcon.src = '{{ asset('image/eye icon.png') }}';  // Icon mata tertutup
+                toggleIcon.src = '{{ asset('storage/images/eye icon.png') }}';  // Icon mata tertutup
             }
         }
 

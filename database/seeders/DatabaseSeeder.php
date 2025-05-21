@@ -15,9 +15,24 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
+
+        $this->call(JenisSampahSeeder::class);
+        $this->call(SetorSampahSeeder::class);
+        $this->call(UserSeeder::class);
+        $this->call(EdukasiSeeder::class);
+        $this->call([
+            DonasiSeeder::class,
+            TransaksiDonasiSeeder::class,
+            SembakoSeeder::class,
+            TransaksiSembakoSeeder::class,
+            VoucherSeeder::class,
+            TransaksiVoucherSeeder::class,
+            TransferSeeder::class,
+            TransaksiTransferSeeder::class,
         ]);
     }
 }
