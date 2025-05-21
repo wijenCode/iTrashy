@@ -26,7 +26,13 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+        // Menggunakan username daripada name
         $request->user()->fill($request->validated());
+
+        // Jika username diubah, maka Anda perlu menangani logika validasi lebih lanjut
+        if ($request->user()->isDirty('username')) {
+            // Misalnya, Anda dapat menambahkan logika untuk menghandle perubahan username jika perlu
+        }
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
@@ -36,6 +42,7 @@ class ProfileController extends Controller
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
+
 
     /**
      * Delete the user's account.

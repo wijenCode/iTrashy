@@ -69,12 +69,12 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         // Arahkan ke halaman yang sesuai berdasarkan role
-        if ($role === 'user') {
-            return redirect()->route('dashboard'); // Misalnya, halaman dashboard user
+        if ($role === 'admin') {
+            return redirect()->route('admin.dashboard'); // Misalnya, halaman dashboard admin
         } elseif ($role === 'driver') {
             return redirect()->route('driver-dashboard'); // Misalnya, halaman dashboard driver
         } else {
-            return redirect()->route('admin.dashboard'); // Misalnya, halaman dashboard admin
+            return redirect()->route('dashboard'); // Misalnya, halaman dashboard user
         }
     }
 }

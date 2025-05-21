@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script> <!-- Add Alpine.js -->
 </head>
 <body class="font-sans bg-gray-50">
 
@@ -27,7 +28,7 @@
                         </a>
                         <div class="absolute left-0 w-48 bg-white shadow-md rounded-lg hidden group-hover:block transition duration-300 ease-in-out">
                             <ul>
-                                <li><a href="{{ route('admin.edukasi.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-200">Edukasi</a></li>
+                                <li><a href="{{ route('admin.jenis-sampah.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-200">Jenis Sampah</a></li>
                             </ul>
                         </div>
                     </li>
@@ -46,16 +47,26 @@
                 <div class="flex items-center space-x-4">
                     <button class="bg-blue-500 text-white px-4 py-2 rounded-lg transition duration-300 ease-in-out hover:bg-blue-600">New Notification</button>
                     <button class="bg-blue-500 text-white px-4 py-2 rounded-lg transition duration-300 ease-in-out hover:bg-blue-600">Profile</button>
-                    <div class="relative">
-                        <button class="bg-gray-800 text-white px-4 py-2 rounded-lg focus:outline-none">
+                    <div x-data="{ open: false }" class="relative">
+                        <!-- Settings Button -->
+                        <button @click="open = !open" class="bg-gray-800 text-white px-4 py-2 rounded-lg focus:outline-none">
                             <span class="text-sm">Settings</span>
                             <svg class="w-4 h-4 inline-block ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </button>
                         <!-- Dropdown Menu -->
-                        <div class="absolute right-0 mt-2 w-48 bg-white shadow-md rounded-lg hidden group-hover:block transition duration-300 ease-in-out">
+                        <div x-show="open" @click.away="open = false" x-transition class="absolute right-0 mt-2 w-48 bg-white shadow-md rounded-lg hidden">
                             <ul>
-                                <li><a class="block px-4 py-2 text-gray-700 hover:bg-gray-200">Profile Settings</a></li>
-                                <li><a class="block px-4 py-2 text-gray-700 hover:bg-gray-200">Log Out</a></li>
+                                <!-- Profile Settings Link -->
+                                <li><a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-200">Profile Settings</a></li>
+                                <!-- Logout Link -->
+                                <li>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit" class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-200">
+                                            {{ __('Log Out') }}
+                                        </button>
+                                    </form>
+                                </li>
                             </ul>
                         </div>
                     </div>

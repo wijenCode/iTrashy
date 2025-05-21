@@ -28,10 +28,31 @@
             <!-- Divider -->
             <div class="w-px h-10 bg-black"></div>
             
-            <!-- Profile -->
-            <a href="profile">
-                <img src="{{ asset('storage/images/profile.jpg') }}" alt="Profile" class="w-10 h-10 rounded-full">
-            </a>
+            <!-- Profile Dropdown -->
+            <div x-data="{ open: false }" class="relative">
+                <!-- Profile Image -->
+                <button @click="open = ! open" class="focus:outline-none">
+                    <img src="{{ asset('storage/images/profile.jpg') }}" alt="Profile" class="w-10 h-10 rounded-full">
+                </button>
+
+                <!-- Dropdown Menu -->
+                <div x-show="open" @click.away="open = false" x-transition class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-10">
+                    <div class="py-1">
+                        <!-- Profile Link -->
+                        <a href="{{ route('profile.show') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                            {{ __('Profile') }}
+                        </a>
+
+                        <!-- Logout Form -->
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                {{ __('Log Out') }}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </header>

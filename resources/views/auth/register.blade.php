@@ -12,10 +12,10 @@
     <!-- Full-Screen Layout -->
     <div class="h-screen flex">
         <!-- Left Side: Image -->
-        <div class="w-1/2 h-screen bg-cover bg-center" style="background-image: url('{{ asset('image/orang buang sampah.jpg') }}');">
+        <div class="w-1/2 h-screen bg-cover bg-center" style="background-image: url('{{ asset('storage/images/orang buang sampah.jpg') }}');">
             <div class="absolute bottom-10 left-10 lg:bottom-20 lg:left-14">
                 <div class="flex items-center mb-2">
-                    <img src="{{ asset('image/logo itrashy.png') }}" alt="I-Trashy Logo" class="w-6 lg:w-12">
+                    <img src="{{ asset('storage/images/logo itrashy.png') }}" alt="I-Trashy Logo" class="w-6 lg:w-12">
                 </div>
                 <h1 class="md:text-2xl font-bold text-white/80 mb-2">I-Trashy.</h1>
                 <p class="text-sm text-white/80 pr-20 lg:pr-0">Solusi pengelolaan sampah untuk rumah tangga dan bisnis</p>
@@ -73,7 +73,7 @@
                         <input type="password" id="password" name="password" placeholder="Masukkan Password" required
                             class="w-full px-4 py-2 rounded-xl bg-[#f5f7fa] mt-2">
                         <button type="button" id="togglePassword" class="absolute right-6 pt-4 opacity-50">
-                            <img src="{{ asset('image/eye icon.png') }}" alt="show/hide" class="w-6">
+                            <img src="{{ asset('storage/images/eye icon.png') }}" alt="show/hide" class="w-6">
                         </button>
                     </div>
 
@@ -83,7 +83,7 @@
                         <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Ulangi Password" required
                             class="w-full px-4 py-2 rounded-xl bg-[#f5f7fa] mt-2">
                         <button type="button" id="toggleConfirmPassword" class="absolute right-6 pt-4 opacity-50">
-                            <img src="{{ asset('image/eye icon.png') }}" alt="show/hide" class="w-6">
+                            <img src="{{ asset('storage/images/eye icon.png') }}" alt="show/hide" class="w-6">
                         </button>
                     </div>
 
@@ -115,7 +115,7 @@
             const input = document.getElementById('password');
             const toggleIcon = document.getElementById('togglePassword').querySelector('img');
             input.type = input.type === 'password' ? 'text' : 'password';
-            toggleIcon.src = input.type === 'password' ? '{{ asset('image/eye icon.png') }}' : '{{ asset('image/eye-slash.png') }}';
+            toggleIcon.src = input.type === 'password' ? '{{ asset('storage/images/eye icon.png') }}' : '{{ asset('storage/images/eye-slash.png') }}';
         }
 
         document.getElementById('togglePassword').addEventListener('click', togglePassword);
@@ -124,7 +124,7 @@
             const input = document.getElementById('confirmPassword');
             const toggleIcon = document.getElementById('toggleConfirmPassword').querySelector('img');
             input.type = input.type === 'password' ? 'text' : 'password';
-            toggleIcon.src = input.type === 'password' ? '{{ asset('image/eye icon.png') }}' : '{{ asset('image/eye-slash.png') }}';
+            toggleIcon.src = input.type === 'password' ? '{{ asset('storage/images/eye icon.png') }}' : '{{ asset('storage/images/eye-slash.png') }}';
         }
 
         document.getElementById('toggleConfirmPassword').addEventListener('click', toggleConfirmPassword);

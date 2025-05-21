@@ -15,5 +15,5 @@ class AdminController extends Controller
     public function index()
     {
         return view('admin.dashboard.index');  // Menampilkan view yang disimpan di resources/views/admin/dashboard/index.blade.php
-}
+    }
 }

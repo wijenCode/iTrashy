@@ -60,7 +60,7 @@
                         <input type="password" id="password" name="password" placeholder="Masukkan Password" required
                             class="w-full px-4 py-2 rounded-xl bg-[#f5f7fa] mt-2">
                         <button type="button" id="togglePassword" class="absolute right-6 pt-4 opacity-50">
-                            <img src="{{ asset('image/eye icon.png') }}" alt="show/hide" class="w-6">
+                            <img src="{{ asset('storage/images/eye icon.png') }}" alt="show/hide" class="w-6">
                         </button>
                     </div>
 
@@ -89,10 +89,10 @@
 
             if (input.type === 'password') {
                 input.type = 'text';
-                toggleIcon.src = '{{ asset('image/eye-slash.png') }}';  // Icon mata terbuka
+                toggleIcon.src = '{{ asset('storage/images/eye-slash.png') }}';  // Icon mata terbuka
             } else {
                 input.type = 'password';
-                toggleIcon.src = '{{ asset('image/eye icon.png') }}';  // Icon mata tertutup
+                toggleIcon.src = '{{ asset('storage/images/eye icon.png') }}';  // Icon mata tertutup
             }
         }
 

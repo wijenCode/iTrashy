@@ -22,6 +22,7 @@ class IsAdmin
         }
 
         // Arahkan pengguna bukan admin ke halaman lain
-        return redirect('/home'); // Atau arahkan ke halaman yang sesuai
+        return redirect('/home'); // Atau arahkan ke halaman yang sesuai
+    }
 }
-}
+

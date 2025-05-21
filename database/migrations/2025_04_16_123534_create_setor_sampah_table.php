@@ -14,9 +14,6 @@ return new class extends Migration
         Schema::create('setor_sampah', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('jenis_sampah_id')->constrained('jenis_sampah')->onDelete('cascade');
-            $table->decimal('total_pendapatan_poin', 10, 2);
-            $table->decimal('total_berat', 10, 2);
             $table->string('alamat');
             $table->enum('status', ['menunggu', 'dikonfirmasi', 'ditolak', 'selesai'])->default('menunggu');
             $table->date('tanggal_setor');

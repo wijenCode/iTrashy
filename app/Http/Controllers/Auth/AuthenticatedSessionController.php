@@ -37,8 +37,10 @@ class AuthenticatedSessionController extends Controller
         } else {
             // Redirect ke halaman user dashboard
             return redirect()->intended(route('dashboard'));
-}
-}
+        }
+    }
+    
+
     /**
      * Destroy an authenticated session.
      */

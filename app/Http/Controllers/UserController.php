@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -14,13 +12,13 @@ class UserController extends Controller
     public function show()
     {
         $user = Auth::user();
-        return view('users.profile.show', compact('user'));
+        return view('user.profile.show', compact('user'));
     }
 
     public function edit()
     {
         $user = Auth::user();
-        return view('users.profile.edit', compact('user'));
+        return view('user.profile.edit', compact('user'));
     }
 
     public function update(Request $request)
@@ -59,27 +57,7 @@ class UserController extends Controller
             'alamat' => $request->alamat,
         ]);
 
-        return redirect()->route('users.show')
+        return redirect()->route('profile.show')
             ->with('success', 'Profil berhasil diperbarui!');
     }
-
-    public function updatePassword(Request $request)
-    {
-        $validated = $request->validate([
-            'current_password' => 'required',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
-
-        $user = Auth::user();
-
-        if (!Hash::check($validated['current_password'], $user->password)) {
-            return back()->withErrors(['current_password' => 'The current password is incorrect.']);
-        }
-
-        $user->update([
-            'password' => Hash::make($validated['password']),
-        ]);
-
-        return redirect()->route('users.show')->with('status', 'Password updated successfully!');
-    }
-} 
+}

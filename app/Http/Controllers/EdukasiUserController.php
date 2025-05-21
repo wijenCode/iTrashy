@@ -13,7 +13,7 @@ class EdukasiUserController extends Controller
     public function index()
     {
         $edukasi = Edukasi::orderBy('created_at', 'desc')->paginate(9);
-        return view('users.edukasi.index', compact('edukasi'));
+        return view('user.edukasi.index', compact('edukasi'));
     }
 
     /**
@@ -33,7 +33,7 @@ class EdukasiUserController extends Controller
             ->limit(3)
             ->get();
 
-        return view('users.edukasi.show', compact('edukasi', 'relatedContent'));
+        return view('user.edukasi.show', compact('edukasi', 'relatedContent'));
     }
 
     /**
@@ -51,7 +51,7 @@ class EdukasiUserController extends Controller
                              ->groupBy('jenis_konten')
                              ->pluck('count', 'jenis_konten');
         
-        return view('users.edukasi.kategori', compact('edukasi', 'kategori', 'jenisCounts'));
+        return view('user.edukasi.kategori', compact('edukasi', 'kategori', 'jenisCounts'));
     }
 
     /**
@@ -69,6 +69,6 @@ class EdukasiUserController extends Controller
                                 ->groupBy('kategori')
                                 ->pluck('count', 'kategori');
         
-        return view('users.edukasi.jenis', compact('edukasi', 'jenis', 'kategoriCounts'));
+        return view('user.edukasi.jenis', compact('edukasi', 'jenis', 'kategoriCounts'));
     }
 } 

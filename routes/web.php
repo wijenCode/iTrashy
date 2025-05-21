@@ -3,19 +3,21 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\EdukasiController;
-use App\Http\Controllers\EdukasiUserController;
-use App\Http\Controllers\AdminDashboardController;
-use App\Http\Controllers\AdminLoginController;
+use App\Http\Controllers\SetorSampahController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Middleware\IsAdmin;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\JenisSampahController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\EdukasiController;
+use App\Http\Controllers\EdukasiUserController;
 use App\Http\Controllers\PencapaianController;
-
-
-
+use App\Http\Controllers\SembakoController;
+use App\Http\Controllers\VoucherController;
+use App\Http\Controllers\DonasiController;
+use App\Http\Controllers\TransferController;
+use App\Http\Controllers\TukarPoinController;
 
 // Rute untuk logout
 Route::post('/logout', function () {
@@ -23,27 +25,45 @@ Route::post('/logout', function () {
     return redirect('/login'); // Redirect ke halaman login setelah logout
 })->name('logout');
 
-// Profile routes
+// Rute untuk halaman profil pengguna
+Route::middleware(['auth'])->get('/profile', [UserController::class, 'show'])->name('profile');
+
 Route::middleware(['auth'])->group(function () {
-    Route::get('/profile', [UserController::class, 'show'])->name('users.show');
-    Route::get('/profile/edit', [UserController::class, 'edit'])->name('users.edit');
-    Route::put('/profile', [UserController::class, 'update'])->name('users.update');
-    Route::put('/profile/password', [UserController::class, 'updatePassword'])->name('users.password.update');
-    
-    // Pencapaian routes
-    Route::get('/pencapaian', [PencapaianController::class, 'index'])->name('users.pencapaian.index');
+
+    // Rute untuk admin dashboard
+    // Route::get('/admin/dashboard', function () {
+    //     if (auth()->check() && auth()->user()->role !== 'admin') {
+    //         return redirect('/home'); // Redirect ke halaman lain jika bukan admin
+    //     }
+    //     return view('admin.dashboard.index'); // Tampilkan dashboard admin
+    // })->name('admin.dashboard');
+
+    // Rute untuk manajemen katalog jenis sampah
+    Route::prefix('admin/jenis-sampah')->name('admin.jenis-sampah.')->group(function () {
+        Route::get('/', [JenisSampahController::class, 'index'])->name('index'); // Halaman index
+        Route::get('/create', [JenisSampahController::class, 'create'])->name('create'); // Form create
+        Route::post('/', [JenisSampahController::class, 'store'])->name('store'); // Simpan data
+        Route::get('/{jenisSampah}/edit', [JenisSampahController::class, 'edit'])->name('edit'); // Form edit
+        Route::put('/{jenisSampah}', [JenisSampahController::class, 'update'])->name('update'); // Update data
+        Route::delete('/{jenisSampah}', [JenisSampahController::class, 'destroy'])->name('destroy'); // Hapus data
+    });
 });
 
+Route::get('/', function () {
+    return view('index'); // View file for the landing page
+});
 
+Route::middleware('auth')->group(function () {
+    Route::get('/setor-sampah', [SetorSampahController::class, 'index'])->name('setor.sampah');
+    Route::post('/setor-sampah', [SetorSampahController::class, 'store'])->name('setor.sampah.store');
 
+    Route::get('/tukar-poin', [TukarPoinController::class, 'index'])->name('tukar_poin.index');
+    Route::get('/voucher/{id}', [VoucherController::class, 'show'])->name('voucher.detail');
+    Route::get('/sembako/{id}', [SembakoController::class, 'show'])->name('sembako.detail');
 
-// Menampilkan form login admin
-Route::get('/admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
-
-// Menangani proses login admin
-Route::post('/admin/login', [AdminLoginController::class, 'login']);
-    
-
+    Route::get('/donasi', [DonasiController::class, 'index'])->name('donasi.index');
+    Route::get('/transfer', [TransferController::class, 'index'])->name('transfer.index');
+});
 
 // Route untuk menampilkan form login (GET request)
 Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
@@ -59,26 +79,44 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/solusi', function () {
+    return view('landing.solusi');
+})->name('solusi');
+
+Route::get('/fitur', function () {
+    return view('landing.fitur');
+})->name('fitur');
+
+Route::get('/tentang', function () {
+    return view('landing.tentang');
+})->name('tentang');
+
 // Route untuk registrasi
 Route::get('register/{role}', [RegisteredUserController::class, 'create'])->name('register.show');
 Route::post('register/{role}', [RegisteredUserController::class, 'store'])->name('register.store');
 
 // Route untuk dashboard masing-masing role
 Route::middleware('auth')->group(function () {
-    // Admin Dashboard
-    Route::get('/admin/dashboard', function () {
-        return view('admin.dashboard.index'); // Halaman khusus admin
-    })->name('admin.dashboard');
-
     // Driver Dashboard
     Route::get('/driver/dashboard', function () {
         return view('driver-dashboard'); // Halaman khusus driver
     })->name('driver-dashboard');
 
+    // Admin Dashboard
+    Route::get('/admin/dashboard', function () {
+        return view('admin.dashboard.index'); // Halaman khusus admin
+    })->name('admin.dashboard');
+
     // User Dashboard
-    Route::get('/dashboard', function () {
-        return view('dashboard'); // Halaman khusus user
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+});
+
+// Rute untuk halaman profil pengguna
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [UserController::class, 'show'])->name('profile.show');
+    Route::get('/profile/edit', [UserController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [UserController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [UserController::class, 'destroy'])->name('profile.destroy');
 });
 
 // Edukasi User Routes
@@ -86,6 +124,9 @@ Route::get('/edukasi', [EdukasiUserController::class, 'index'])->name('edukasi.i
 Route::get('/edukasi/{id}', [EdukasiUserController::class, 'show'])->name('edukasi.show');
 Route::get('/edukasi/kategori/{kategori}', [EdukasiUserController::class, 'kategori'])->name('edukasi.kategori');
 Route::get('/edukasi/jenis/{jenis}', [EdukasiUserController::class, 'jenisKonten'])->name('edukasi.jenis');
+
+// Pencapaian routes
+Route::get('/pencapaian', [PencapaianController::class, 'index'])->name('user.pencapaian.index');
 
 // Admin Edukasi Routes
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
@@ -112,4 +153,3 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 });
 
 require __DIR__.'/auth.php';
-

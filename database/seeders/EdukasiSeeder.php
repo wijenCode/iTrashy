@@ -30,4 +30,3 @@ class EdukasiSeeder extends Seeder
         }
     }
 }
-
