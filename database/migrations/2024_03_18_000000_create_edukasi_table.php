@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('judul_konten');
             $table->text('deskripsi');
+            $table->string('gambar')->nullable();
             $table->text('konten');
             $table->string('gambar')->nullable();
             $table->string('jenis_konten');
@@ -30,5 +31,5 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('edukasi');
-    }
+}
 };
