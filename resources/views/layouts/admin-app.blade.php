@@ -30,6 +30,9 @@
                             <ul>
                                 <li><a href="{{ route('admin.jenis-sampah.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-200">Jenis Sampah</a></li>
                             </ul>
+                            <ul>
+                                <li><a href="{{ route('admin.edukasi.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-200">Edukasi</a></li>
+                            </ul>
                         </div>
                     </li>
                 </ul>

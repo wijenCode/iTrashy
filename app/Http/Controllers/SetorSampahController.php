@@ -53,7 +53,10 @@ class SetorSampahController extends Controller
             $setorSampah->alamat = $request->alamat;
             $setorSampah->tanggal_setor = $request->tanggal_setor;
             $setorSampah->waktu_setor = $request->waktu_setor;
-            $setorSampah->status = 'menunggu';
+            $setorSampah->status = SetorSampah::STATUS_MENUNGGU;
+            
+            // Generate kode kredensial saat user membuat pesanan
+            $setorSampah->generateKodeKredensial();
             $setorSampah->save();
 
             // Define fee (20%)
@@ -86,25 +89,43 @@ class SetorSampahController extends Controller
             $totalFee = $totalPoinBeforeFee * $fee_percentage;
             $totalPoinAfterFee = $totalPoinBeforeFee - $totalFee;
 
-            // Update user's total points with fee deducted
-            $user = Auth::user();
-            $user->poin_terkumpul = ($user->poin_terkumpul ?? 0) + round($totalPoinAfterFee);
-            $user->sampah_terkumpul = ($user->sampah_terkumpul ?? 0) + $totalSampah;
-            $user->save();
+            // Jangan update poin user dulu, tunggu sampai selesai
+            // Poin akan diupdate saat driver menyelesaikan penjemputan
 
             DB::commit();
 
-            // Return with success message and fee information
-            return redirect()->route('dashboard')->with('success', 
-                'Permintaan setor sampah berhasil dikirim! ' .
-                'Poin sebelum fee: ' . round($totalPoinBeforeFee) . ', ' .
-                'Fee (20%): ' . round($totalFee) . ', ' .
-                'Total poin diterima: ' . round($totalPoinAfterFee)
+            return redirect()->route('setor.sampah.detail', $setorSampah->id)->with('success', 
+                'Permintaan setor sampah berhasil dikirim! Kode kredensial Anda: <strong>' . $setorSampah->kode_kredensial . '</strong><br>Simpan kode ini untuk diberikan kepada driver saat penjemputan.'
             );
 
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
+    }
+
+    /**
+     * Show detail setor sampah untuk user
+     */
+    public function show($id)
+    {
+        $setorSampah = SetorSampah::with(['setorItems.jenisSampah', 'driver'])
+            ->where('user_id', Auth::id())
+            ->findOrFail($id);
+
+        return view('user.setor_sampah.detail', compact('setorSampah'));
+    }
+
+    /**
+     * Show history setor sampah user
+     */
+    public function history()
+    {
+        $setorSampah = SetorSampah::with(['setorItems.jenisSampah', 'driver'])
+            ->where('user_id', Auth::id())
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return view('user.setor_sampah.history', compact('setorSampah'));
     }
 }

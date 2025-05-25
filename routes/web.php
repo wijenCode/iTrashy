@@ -18,6 +18,7 @@ use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\DonasiController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\TukarPoinController;
+use App\Http\Controllers\DriverController;
 
 // Rute untuk logout
 Route::post('/logout', function () {
@@ -56,6 +57,8 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/setor-sampah', [SetorSampahController::class, 'index'])->name('setor.sampah');
     Route::post('/setor-sampah', [SetorSampahController::class, 'store'])->name('setor.sampah.store');
+    Route::get('/setor-sampah/{id}/detail', [SetorSampahController::class, 'show'])->name('setor.sampah.detail');
+    Route::get('/setor-sampah/history', [SetorSampahController::class, 'history'])->name('setor.sampah.history');
 
     Route::get('/tukar-poin', [TukarPoinController::class, 'index'])->name('tukar_poin.index');
     Route::get('/voucher/{id}', [VoucherController::class, 'show'])->name('voucher.detail');
@@ -150,6 +153,29 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     
     // Destroy - Menghapus edukasi
     Route::delete('/edukasi/{id}', [EdukasiController::class, 'destroy'])->name('edukasi.destroy');
+});
+
+
+
+// Driver routes - hanya untuk user dengan role 'driver'
+Route::middleware(['auth', 'role:driver'])->prefix('driver')->name('driver.')->group(function () {
+    // Halaman ambil sampah
+    Route::get('/ambil-sampah', [DriverController::class, 'ambilSampah'])->name('ambil.sampah');
+    
+    // Terima pesanan
+    Route::post('/terima-pesanan/{id}', [DriverController::class, 'terimaPesanan'])->name('terima.pesanan');
+    
+    // Tolak pesanan
+    Route::post('/tolak-pesanan/{id}', [DriverController::class, 'tolakPesanan'])->name('tolak.pesanan');
+    
+    // Halaman penjemputan saya
+    Route::get('/penjemputan-saya', [DriverController::class, 'penjemputanSaya'])->name('penjemputan.saya');
+    
+    // Edit penjemputan
+    Route::post('/edit-penjemputan/{id}', [DriverController::class, 'editPenjemputan'])->name('edit.penjemputan');
+    
+    // Selesaikan penjemputan
+    Route::post('/selesaikan-penjemputan/{id}', [DriverController::class, 'selesaikanPenjemputan'])->name('selesaikan.penjemputan');
 });
 
 require __DIR__.'/auth.php';

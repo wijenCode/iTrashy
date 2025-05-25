@@ -9,7 +9,7 @@
         <div class="flex flex-col lg:flex-row gap-4 lg:gap-6">
 
             <!-- Daftar Jenis Sampah -->
-            <div class="w-full lg:w-[600px]">
+            <div class="w-full lg:w-3/4">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-3 md:gap-4">
                     @foreach ($jenis_sampah as $index => $sampah)
                     <div class="flex items-center bg-white rounded-lg shadow-md p-3 gap-3">
@@ -25,7 +25,7 @@
             </div>
 
             <!-- Keranjang (Order List) -->
-            <div id="cartOverlay" class="fixed lg:relative top-0 right-0 h-full w-full max-w-md bg-white shadow-xl transform translate-x-full lg:translate-x-0 transition-transform duration-300 rounded-lg z-50 lg:z-0 lg:w-[370px] lg:block">
+            <div id="cartOverlay" class="fixed lg:relative top-0 right-0 h-full w-full max-w-md bg-white shadow-xl transform translate-x-full lg:translate-x-0 transition-transform duration-300 rounded-lg z-50 lg:z-0 lg:block">
                 <div class="h-full flex flex-col">
                     <!-- Mobile Header Order List -->
                     <div class="p-4 border-b flex justify-between items-center lg:hidden">

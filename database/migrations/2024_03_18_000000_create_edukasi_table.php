@@ -15,12 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('judul_konten');
-            $table->text('deskripsi');
-            $table->string('gambar')->nullable();
             $table->text('konten');
-            $table->string('gambar')->nullable();
             $table->string('jenis_konten');
             $table->string('kategori');
+            $table->string('gambar')->nullable();
+            $table->string('video_url')->nullable();
             $table->timestamps();
         });
     }

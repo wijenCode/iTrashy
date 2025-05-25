@@ -19,13 +19,13 @@ class EdukasiSeeder extends Seeder
         foreach (range(1, 10) as $index) {
             // Insert dummy data into 'edukasi' table
             Edukasi::create([
-                'user_id' => 1,  // Assuming you have a user with ID 1 for testing
-                'judul_konten' => $faker->sentence(),
-                'deskripsi' => $faker->paragraph(),
-                'gambar' => $faker->imageUrl(800, 600, 'business', true, 'Edukasi'), // Random image URL
-                'konten' => $faker->paragraph(), // Content for articles or video description
-                'jenis_konten' => $index % 2 == 0 ? 'artikel' : 'video', // Alternate between 'artikel' and 'video'
-                'kategori' => $faker->word(), // Random category
+                'user_id' => 1, // Assuming user_id 1 exists
+                'judul_konten' => $faker->sentence,
+                'konten' => $faker->paragraph,
+                'gambar' => $faker->imageUrl(640, 480, 'nature'),
+                'video_url' => $faker->url,
+                'jenis_konten' => $faker->randomElement(['artikel', 'video']),
+                'kategori' => $faker->randomElement(['Daur Ulang', 'Style Hidup', 'Kesehatan', 'Lingkungan']),
             ]);
         }
     }
