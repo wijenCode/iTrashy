@@ -13,7 +13,7 @@
         <div class="flex flex-col items-start pl-10">
             <p class="text-sm pb-1">Poin Anda</p>
             <div class="flex space-x-2 justify-center">
-                <img src="{{ asset('storage/images/poin.png') }}" alt="Poin" class="h-6 w-6">
+                <img src="{{ asset('storage/images/poin logo.png') }}" alt="Poin" class="h-6 w-6">
                 <h4 class="text-xl lg:text-xl font-bold">
                     {{ number_format(Auth::user()->poin_terkumpul, 0, ',', '.') }}
                 </h4>
@@ -22,33 +22,32 @@
     </div>
 
     <nav class="p-5 mt-5 space-y-8">
-        <a href="{{ url('/dashboard') }}" class="nav-link flex items-center space-x-4 hover:bg-gray-200 hover:ml-[-20px] hover:pl-[30px] hover:pr-[5px] hover:py-[10px] hover:font-medium hover:rounded-r-xl transition-all duration-300">
+        <a href="{{ url('/dashboard') }}" class="nav-link flex items-center space-x-4 hover:bg-gray-200 hover:ml-[-20px] hover:pl-[30px] hover:pr-[5px] hover:py-[10px] hover:font-medium hover:rounded-r-xl transition-all duration-300 {{ request()->routeIs('dashboard.index') ? 'bg-[#3968DA] text-white ml-[-20px] pl-[30px] pr-[5px] py-[10px] font-medium rounded-r-2xl' : '' }}">
             <img src="{{ asset('storage/images/dashboard.png') }}" alt="Dashboard Icon" class="w-5 h-5">
             <span>Dashboard</span>
         </a>
-        <a href="{{ url('/setor-sampah') }}" class="nav-link flex items-center space-x-4 hover:bg-gray-200 hover:ml-[-20px] hover:pl-[30px] hover:pr-[5px] hover:py-[10px] hover:font-medium hover:rounded-r-xl transition-all duration-300">
-            <img src="{{ asset('storage/images/setor.png') }}" alt="Setor Sampah Icon" class="w-6 h-6">
+        <a href="{{ url('/setor-sampah') }}" class="nav-link flex items-center space-x-4 hover:bg-gray-200 hover:ml-[-20px] hover:pl-[30px] hover:pr-[5px] hover:py-[10px] hover:font-medium hover:rounded-r-xl transition-all duration-300 {{ request()->routeIs('setor.sampah') ? 'bg-[#3968DA] text-white ml-[-20px] pl-[30px] pr-[5px] py-[10px] font-medium rounded-r-2xl' : '' }}">
+            <img src="{{ asset('storage/images/jemput.png') }}" alt="Setor Sampah Icon" class="w-6 h-6">
             <span>Setor Sampah</span>
         </a>
-        <a href="{{ route('tukar_poin.index') }}" class="nav-link flex items-center space-x-4 hover:bg-gray-200 hover:ml-[-20px] hover:pl-[30px] hover:pr-[5px] hover:py-[10px] hover:font-medium hover:rounded-r-xl transition-all duration-300">
-            <img src="{{ asset('storage/images/poin black.png') }}" alt="Tukar Poin Icon" class="w-5 h-5">
+        <a href="{{ route('tukar_poin.index') }}" class="nav-link flex items-center space-x-4 hover:bg-gray-200 hover:ml-[-20px] hover:pl-[30px] hover:pr-[5px] hover:py-[10px] hover:font-medium hover:rounded-r-xl transition-all duration-300 {{ request()->routeIs('tukar_poin.index') || request()->routeIs('voucher.detail') || request()->routeIs('sembako.detail') ? 'bg-[#3968DA] text-white ml-[-20px] pl-[30px] pr-[5px] py-[10px] font-medium rounded-r-2xl' : '' }}">
+            <img src="{{ asset('storage/images/image 106.png') }}" alt="Tukar Poin Icon" class="w-5 h-5">
             <span>Tukar Poin</span>
         </a>    
-        <a href="{{ route('edukasi.index') }}" class="nav-link flex items-center space-x-4 hover:bg-gray-200 hover:ml-[-20px] hover:pl-[30px] hover:pr-[5px] hover:py-[10px] hover:font-medium hover:rounded-r-xl transition-all duration-300">
+        <a href="{{ route('edukasi.index') }}" class="nav-link flex items-center space-x-4 hover:bg-gray-200 hover:ml-[-20px] hover:pl-[30px] hover:pr-[5px] hover:py-[10px] hover:font-medium hover:rounded-r-xl transition-all duration-300 {{ request()->routeIs('edukasi.index') || request()->routeIs('edukasi.show') || request()->routeIs('edukasi.kategori') || request()->routeIs('edukasi.jenis') ? 'bg-[#3968DA] text-white ml-[-20px] pl-[30px] pr-[5px] py-[10px] font-medium rounded-r-2xl' : '' }}">
             <img src="{{ asset('storage/images/edukasi.png') }}" alt="Edukasi Icon" class="w-5 h-5">
             <span>Edukasi</span>
         </a>
-        <a href="{{ route('user.pencapaian.index') }}" class="nav-link flex items-center space-x-4 hover:bg-gray-200 hover:ml-[-20px] hover:pl-[30px] hover:pr-[5px] hover:py-[10px] hover:font-medium hover:rounded-r-xl transition-all duration-300">
+        <a href="{{ route('user.pencapaian.index') }}" class="nav-link flex items-center space-x-4 hover:bg-gray-200 hover:ml-[-20px] hover:pl-[30px] hover:pr-[5px] hover:py-[10px] hover:font-medium hover:rounded-r-xl transition-all duration-300 {{ request()->routeIs('user.pencapaian.index') ? 'bg-[#3968DA] text-white ml-[-20px] pl-[30px] pr-[5px] py-[10px] font-medium rounded-r-2xl' : '' }}">
             <img src="{{ asset('storage/images/pencapaian.png') }}" alt="Pencapaian Icon" class="w-6 h-6">
             <span>Pencapaian</span>
         </a>
-        <a href="#" class="nav-link flex items-center space-x-4 hover:bg-gray-200 hover:ml-[-20px] hover:pl-[30px] hover:pr-[5px] hover:py-[10px] hover:font-medium hover:rounded-r-xl transition-all duration-300">
+        <a href="{{ route('riwayat.index') }}" class="nav-link flex items-center space-x-4 hover:bg-gray-200 hover:ml-[-20px] hover:pl-[30px] hover:pr-[5px] hover:py-[10px] hover:font-medium hover:rounded-r-xl transition-all duration-300 {{ request()->routeIs('riwayat.index') ? 'bg-[#3968DA] text-white ml-[-20px] pl-[30px] pr-[5px] py-[10px] font-medium rounded-r-2xl' : '' }}">
             <img src="{{ asset('storage/images/riwayat.png') }}" alt="Riwayat Icon" class="w-6 h-6">
             <span>Riwayat</span>
         </a>
     </nav>
-</div>
-
+</div>   
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -65,14 +64,14 @@
             menuClose.addEventListener('click', () => menu.classList.add('-translate-x-full'));
         }
 
-        // Set active menu item
-        const currentPage = window.location.pathname.split('/').pop();
-        navLinks.forEach(link => {
-            const href = link.getAttribute('href');
-            if (href.includes(currentPage)) {
-                link.classList.add('bg-[#3968DA]', 'text-white', 'ml-[-20px]', 'pl-[30px]', 'pr-[5px]', 'py-[10px]', 'font-medium', 'rounded-r-2xl');
-            }
-        });
+        // Set active menu item - This part is no longer needed for active state because it's handled by PHP
+        // const currentPage = window.location.pathname.split('/').pop();
+        // navLinks.forEach(link => {
+        //     const href = link.getAttribute('href');
+        //     if (href.includes(currentPage)) {
+        //         link.classList.add('bg-[#3968DA]', 'text-white', 'ml-[-20px]', 'pl-[30px]', 'pr-[5px]', 'py-[10px]', 'font-medium', 'rounded-r-2xl');
+        //     }
+        // });
     }
 </script>
 @endpush

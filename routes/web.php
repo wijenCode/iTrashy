@@ -18,6 +18,7 @@ use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\DonasiController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\TukarPoinController;
+use App\Http\Controllers\RiwayatController;
 
 // Rute untuk logout
 Route::post('/logout', function () {
@@ -61,8 +62,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/voucher/{id}', [VoucherController::class, 'show'])->name('voucher.detail');
     Route::get('/sembako/{id}', [SembakoController::class, 'show'])->name('sembako.detail');
 
+    // Add routes for exchanging points (tukar)
+    Route::post('/voucher/{id}/tukar', [TukarPoinController::class, 'tukarVoucher'])->name('voucher.tukar');
+    Route::post('/sembako/{id}/tukar', [TukarPoinController::class, 'tukarSembako'])->name('sembako.tukar');
+
     Route::get('/donasi', [DonasiController::class, 'index'])->name('donasi.index');
     Route::get('/transfer', [TransferController::class, 'index'])->name('transfer.index');
+    Route::post('/transfer', [TransferController::class, 'store'])->name('transfer.store');
+    Route::get('/transfer/{id}', [TransferController::class, 'show'])->name('transfer.show');
+
+    Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
 });
 
 // Route untuk menampilkan form login (GET request)

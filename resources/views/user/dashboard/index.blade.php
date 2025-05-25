@@ -21,7 +21,7 @@
                         <div class="flex lg:flex-row md:justify-around lg:justify-around justify-between">
                             <!-- Points Display -->
                             <div class="flex items-center space-x-2 justify-center">
-                                <img src="{{ asset('assets/icon/poin logo.png') }}" alt="Poin" class="md:w-10 lg:w-10 w-8">
+                                <img src="{{ asset('storage/images/poin logo.png') }}" alt="Poin" class="md:w-10 lg:w-10 w-8">
                                 <h4 class="text-xl lg:text-2xl font-bold">{{ number_format(Auth::user()->poin_terkumpul, 0, ',', '.') }}</h4>
                             </div>
 
@@ -103,7 +103,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>
                                 <p class="text-gray-500">Belum ada jadwal penjemputan</p>
-                                <a href="{{ route('setor.sampah.index') }}" class="mt-3 text-sm text-blue-600 hover:underline">Setor sampah sekarang</a>
+                                <a href="{{ route('setor.sampah') }}" class="mt-3 text-sm text-blue-600 hover:underline">Setor sampah sekarang</a>
                             </div>
                         @endif
                     </div>
