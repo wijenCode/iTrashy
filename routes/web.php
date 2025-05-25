@@ -19,6 +19,8 @@ use App\Http\Controllers\DonasiController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\TukarPoinController;
 use App\Http\Controllers\RiwayatController;
+use App\Http\Controllers\DriverController;
+
 
 // Rute untuk logout
 Route::post('/logout', function () {
@@ -57,8 +59,7 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/setor-sampah', [SetorSampahController::class, 'index'])->name('setor.sampah');
     Route::post('/setor-sampah', [SetorSampahController::class, 'store'])->name('setor.sampah.store');
-    Route::get('/setor-sampah/{id}/detail', [SetorSampahController::class, 'show'])->name('setor.sampah.detail');
-    Route::get('/setor-sampah/history', [SetorSampahController::class, 'history'])->name('setor.sampah.history');
+    
 
     Route::get('/tukar-poin', [TukarPoinController::class, 'index'])->name('tukar_poin.index');
     Route::get('/voucher/{id}', [VoucherController::class, 'show'])->name('voucher.detail');
@@ -74,6 +75,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/transfer/{id}', [TransferController::class, 'show'])->name('transfer.show');
 
     Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
+    Route::get('/riwayat/{id}/detail', [SetorSampahController::class, 'detail'])->name('riwayat.detail');
 });
 
 // Route untuk menampilkan form login (GET request)

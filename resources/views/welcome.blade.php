@@ -8,8 +8,7 @@
     <script>
         tailwind.config = {
             theme: {
-                extend: {
-                    fontFamily: {
+                extend: {                    fontFamily: {
                         sans: ['THICCCBOI'],
                     },
                 },

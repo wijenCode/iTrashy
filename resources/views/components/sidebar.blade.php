@@ -57,7 +57,7 @@
             </a>
 
             <!-- Riwayat Menu -->
-            <a href="{{ route('setor.sampah.history') }}" class="nav-link flex items-center space-x-4 hover:bg-gray-200 hover:ml-[-20px] hover:pl-[30px] hover:pr-[5px] hover:py-[10px] hover:font-medium hover:rounded-r-xl transition-all duration-300">
+            <a href="{{ route('riwayat.index') }}" class="nav-link flex items-center space-x-4 hover:bg-gray-200 hover:ml-[-20px] hover:pl-[30px] hover:pr-[5px] hover:py-[10px] hover:font-medium hover:rounded-r-xl transition-all duration-300">
                 <img src="{{ asset('storage/images/riwayat.png') }}" alt="Riwayat Icon" class="w-6 h-6">
                 <span>Riwayat</span>
             </a>
@@ -95,14 +95,14 @@
             menuClose.addEventListener('click', () => menu.classList.add('-translate-x-full'));
         }
 
-        // Set active menu item - This part is no longer needed for active state because it's handled by PHP
-        // const currentPage = window.location.pathname.split('/').pop();
-        // navLinks.forEach(link => {
-        //     const href = link.getAttribute('href');
-        //     if (href.includes(currentPage)) {
-        //         link.classList.add('bg-[#3968DA]', 'text-white', 'ml-[-20px]', 'pl-[30px]', 'pr-[5px]', 'py-[10px]', 'font-medium', 'rounded-r-2xl');
-        //     }
-        // });
+        // Set active menu item
+        const currentPage = window.location.pathname.split('/').pop();
+        navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href.includes(currentPage)) {
+                link.classList.add('bg-[#3968DA]', 'text-white', 'ml-[-20px]', 'pl-[30px]', 'pr-[5px]', 'py-[10px]', 'font-medium', 'rounded-r-2xl');
+            }
+        });
     }
 </script>
 @endpush

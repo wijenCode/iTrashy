@@ -94,7 +94,7 @@ class SetorSampahController extends Controller
 
             DB::commit();
 
-            return redirect()->route('setor.sampah.detail', $setorSampah->id)->with('success', 
+            return redirect()->route('riwayat.detail', $setorSampah->id)->with('success', 
                 'Permintaan setor sampah berhasil dikirim! Kode kredensial Anda: <strong>' . $setorSampah->kode_kredensial . '</strong><br>Simpan kode ini untuk diberikan kepada driver saat penjemputan.'
             );
 
@@ -107,25 +107,12 @@ class SetorSampahController extends Controller
     /**
      * Show detail setor sampah untuk user
      */
-    public function show($id)
+    public function detail($id)
     {
         $setorSampah = SetorSampah::with(['setorItems.jenisSampah', 'driver'])
             ->where('user_id', Auth::id())
             ->findOrFail($id);
 
-        return view('user.setor_sampah.detail', compact('setorSampah'));
-    }
-
-    /**
-     * Show history setor sampah user
-     */
-    public function history()
-    {
-        $setorSampah = SetorSampah::with(['setorItems.jenisSampah', 'driver'])
-            ->where('user_id', Auth::id())
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
-
-        return view('user.setor_sampah.history', compact('setorSampah'));
+        return view('user.riwayat.detail', compact('setorSampah'));
     }
 }

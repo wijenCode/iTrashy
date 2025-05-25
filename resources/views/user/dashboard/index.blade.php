@@ -67,51 +67,6 @@
                 </div>
 
                 <div class="space-y-4 mt-10 lg:mt-0 lg:bg-white lg:p-5 lg:rounded-lg order-2 lg:order-3">
-<<<<<<< HEAD
-=======
-                    <!-- Jadwal Penjemputan Container -->
-                    <div class="bg-white lg:bg-[#f5f6fb] rounded-lg shadow p-4">
-                        <h4 class="font-bold text-lg mb-3">Jadwal Penjemputan</h4>
-                        @if(count($setorSampah) > 0)
-                            <div class="space-y-3 max-h-[220px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent hover:scrollbar-thumb-gray-400">
-                                @foreach($setorSampah as $setor)
-                                    <div class="bg-white rounded-lg shadow-sm p-3 border-l-4 
-                                        @if($setor->status == 'menunggu') border-yellow-500
-                                        @elseif($setor->status == 'dikonfirmasi') border-blue-500
-                                        @elseif($setor->status == 'dalam_penjemputan') border-purple-500
-                                        @elseif($setor->status == 'selesai') border-green-500
-                                        @else border-gray-500 @endif">
-                                        <div class="flex justify-between items-start">
-                                            <div>
-                                                <p class="font-medium">{{ \Carbon\Carbon::parse($setor->tanggal_setor)->format('d M Y') }}</p>
-                                                <p class="text-sm text-gray-600">{{ \Carbon\Carbon::parse($setor->waktu_setor)->format('H:i') }} WIB</p>
-                                                <p class="text-xs text-gray-500 mt-1 truncate max-w-[180px]">{{ $setor->alamat }}</p>
-                                            </div>
-                                            <span class="px-2 py-1 text-xs rounded-full 
-                                                @if($setor->status == 'menunggu') bg-yellow-100 text-yellow-800
-                                                @elseif($setor->status == 'dikonfirmasi') bg-blue-100 text-blue-800
-                                                @elseif($setor->status == 'dalam_penjemputan') bg-purple-100 text-purple-800
-                                                @elseif($setor->status == 'selesai') bg-green-100 text-green-800
-                                                @else bg-gray-100 text-gray-800 @endif">
-                                                {{ ucfirst(str_replace('_', ' ', $setor->status)) }}
-                                            </span>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        @else
-                            <div class="flex flex-col items-center justify-center py-6 text-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                </svg>
-                                <p class="text-gray-500">Belum ada jadwal penjemputan</p>
-                                <a href="{{ route('setor.sampah') }}" class="mt-3 text-sm text-blue-600 hover:underline">Setor sampah sekarang</a>
-                            </div>
-                        @endif
-                    </div>
-
-                    <!-- Sampah Terkumpul Chart -->
->>>>>>> 4f2933e08faf514621e9a28e97b16ab2372b9c2c
                     <div class="bg-white lg:bg-[#f5f6fb] rounded-lg shadow p-4 h-[220px]">
                         <h4 class="font-bold text-lg mb-3">Sampah Terkumpul</h4>
                         <div class="h-[150px]">

@@ -34,12 +34,11 @@ class AuthenticatedSessionController extends Controller
         if (auth()->user()->role === 'admin') {
             // Redirect ke halaman admin dashboard
             return redirect()->intended(route('admin.dashboard'));
-        } else if (auth()->user()->role === 'user') {
+        } else if (auth()->user()->role === 'driver') {
             // Redirect ke halaman user dashboard
-            return redirect()->intended(route('dashboard.index'));
+            return redirect()->intended(route('driver.ambil.sampah'));
         } else {
-            // Jika role tidak dikenali, redirect ke halaman default
-            return redirect()->intended(route('driver.ambil.sampah')); // Ganti dengan URL yang sesuai
+            return redirect()->intended(route('dashboard.index')); // Ganti dengan URL yang sesuai
         }
     }
     

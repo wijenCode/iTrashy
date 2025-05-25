@@ -106,6 +106,16 @@ const modalContent = document.getElementById('modal-content-detail');
 detailBtns.forEach(btn => {
     btn.addEventListener('click', function() {
         const data = JSON.parse(this.getAttribute('data-detail'));
+        
+        // Jika tipe transaksi adalah Setor Sampah, arahkan ke halaman riwayat.detail
+        // Jika tipe transaksi adalah Setor Sampah, arahkan ke halaman riwayat.detail
+        if (data.type === 'Setor Sampah') {
+            // Arahkan ke halaman detail riwayat dengan ID yang sesuai
+            window.location.href = "{{ route('riwayat.detail', ['id' => ':id']) }}".replace(':id', data.id);
+            return;
+        }
+        
+        // Untuk tipe transaksi lainnya, tampilkan modal seperti biasa
         let html = `<h3 class='font-bold text-xl mb-2'>${data.type === 'Setor Sampah' ? 'Penjemputan Sampah' : (data.type === 'Voucher' ? 'Tukar Poin' : data.type)}</h3>`;
         html += `<div class='mb-2 text-sm text-gray-500'>Tanggal: <span class='font-semibold'>${new Date(data.date).toLocaleDateString('id-ID')}</span></div>`;
         html += `<div class='mb-2 text-sm text-gray-500'>Status: <span class='font-semibold text-green-600'>Selesai</span></div>`;

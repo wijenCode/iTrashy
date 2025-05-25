@@ -10,6 +10,7 @@ use App\Models\TransaksiTransfer;
 use App\Models\SetorSampah;
 use App\Models\TransaksiDonasi;
 use Illuminate\Support\Collection;
+use App\Models\SetorItem;
 
 class RiwayatController extends Controller
 {
@@ -63,12 +64,13 @@ class RiwayatController extends Controller
         $setor = SetorSampah::where('user_id', $user->id)
             ->where('status', 'selesai')
             ->get()
-            ->map(function($item) {
+            ->map(function($items) {
                 return [
+                    'id' => $items->id,
                     'type' => 'Setor Sampah',
-                    'name' => $item->alamat,
-                    'date' => $item->tanggal_setor,
-                    'poin' => $item->setorItem->sum('poin'),
+                    'name' => $items->alamat,
+                    'date' => $items->tanggal_setor,
+                    'poin' => $items->setorItems->sum('poin'),
                     'desc' => 'Setor sampah',
                     'kode' => null,
                 ];

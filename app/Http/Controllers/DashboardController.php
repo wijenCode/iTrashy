@@ -11,7 +11,7 @@ class DashboardController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $edukasiItems = Edukasi::latest()->take(6)->get();
+        $edukasiItems = Edukasi::latest()->take(3)->get();
 
         return view('user.dashboard.index', compact('user', 'edukasiItems'));
     }

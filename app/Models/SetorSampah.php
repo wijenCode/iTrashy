@@ -32,6 +32,7 @@ class SetorSampah extends Model
 
     // Status konstanta
     const STATUS_MENUNGGU = 'menunggu';
+    const STATUS_DIKONFIRMASI = 'dikonfirmasi';
     const STATUS_DIAMBIL = 'diambil';
     const STATUS_DITOLAK = 'ditolak';
     const STATUS_SELESAI = 'selesai';
