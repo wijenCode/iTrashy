@@ -34,7 +34,20 @@ class SembakoController extends Controller
     public function show($id)
     {
         $sembako = Sembako::findOrFail($id);
-        return view('sembako.detail', compact('sembako'));
+        // Get other sembakos for the "Sembako lainnya" section, excluding the current one
+        $sembakos = Sembako::where('id', '!=', $id)->where('status', 'tersedia')->get();
+
+        // Contoh rincian, bisa diambil dari kolom lain atau diolah
+        // For now, hardcode some examples
+        $sembako->rincian = [
+            'Berlaku untuk 1x penukaran',
+            'Stok terbatas',
+            'Tidak dapat diuangkan',
+            'Hanya berlaku di cabang yang terdaftar',
+            'Wajib menunjukkan bukti penukaran saat pengambilan'
+        ];
+
+        return view('user.tukar_poin.sembako_detail', compact('sembako', 'sembakos'));
     }
 
     public function update(Request $request, $id)

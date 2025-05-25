@@ -12,28 +12,21 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <!-- Statistik Section -->
             <div class="col-span-1 lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Sampah Terkumpul -->
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <h3 class="text-lg font-semibold text-gray-800">Jejak Sampah Terkumpul</h3>
-                    <div class="h-[300px]">
-                        <canvas id="garbageChart" class="my-4"></canvas>
+                <!-- Sampah Terkumpul Chart -->
+                <div class="bg-white rounded-lg shadow p-4 h-[220px]">
+                    <h4 class="font-bold text-lg mb-3">Sampah Terkumpul</h4>
+                    <div class="h-[150px]">
+                        <canvas id="garbageChart"></canvas>
                     </div>
-                    <p class="text-2xl font-bold text-gray-800">{{ $totalWeight }} Kg</p>
-                    <p class="text-gray-500 text-sm">
-                        Ayo setorkan sampahmu!
-                    </p>
+                    <p class="text-2xl font-bold text-gray-800 mt-2">{{ number_format($totalWeight, 1) }} Kg</p>
                 </div>
-
-                <!-- Grafik Jejak Karbon -->
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <h3 class="text-lg font-semibold text-gray-800">Jejak Karbon</h3>
-                    <div class="h-[300px]">
-                        <canvas id="carbonChart" class="my-4"></canvas>
+                <!-- Jejak Karbon Chart -->
+                <div class="bg-white rounded-lg shadow p-4 h-[220px]">
+                    <h4 class="font-bold text-lg mb-3">Jejak Karbon Terkurangi</h4>
+                    <div class="h-[150px]">
+                        <canvas id="carbonChart"></canvas>
                     </div>
-                    <p class="text-2xl font-bold text-gray-800">{{ $totalCarbonReduced }} Kg CO₂</p>
-                    <p class="text-gray-500 text-sm">
-                        Ayo olah sampahmu untuk kurangi jejak karbonmu!
-                    </p>
+                    <p class="text-2xl font-bold text-gray-800 mt-2">{{ number_format($totalCarbonReduced, 1) }} Kg CO₂</p>
                 </div>
             </div>
 
@@ -51,14 +44,14 @@
                             </div>
                             <!-- Profile -->
                             <div class="ml-4 flex-shrink-0">
-                                <img src="{{ $user->profile_picture ? asset('storage/' . $user->profile_picture) : asset('assets/icon/user.png') }}" 
+                                <img src="{{ $user->foto_profile ? asset('storage/' . $user->foto_profile) : asset('assets/icon/user.png') }}" 
                                      alt="Avatar" 
                                      class="w-14 h-14 rounded-full">
                             </div>
                             <!-- User Info -->
                             <div class="ml-4">
                                 <h3 class="text-lg font-medium">{{ $user->username }}</h3>
-                                <p class="text-sm">Total Berat: <strong>{{ $user->total_weight }} Kg</strong></p>
+                                <p class="text-sm">Total Berat: <strong>{{ number_format($user->total_weight, 1) }} Kg</strong></p>
                             </div>
                         </div>
                     @empty
@@ -74,12 +67,12 @@
             <div id="waste-list" class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 @forelse($wasteData as $waste)
                     <div class="flex items-center space-x-4 bg-white p-4 rounded-lg shadow-md">
-                        <img src="{{ asset('assets/image/' . $waste->image) }}" 
-                             alt="{{ $waste->waste_type }}" 
+                        <img src="{{ asset('assets/image/' . $waste['image']) }}" 
+                             alt="{{ $waste['waste_type'] }}" 
                              class="w-12 h-12">
                         <div>
-                            <p class="font-bold text-gray-800">{{ $waste->waste_type }}</p>
-                            <p class="text-sm text-gray-500">{{ $waste->total_quantity }} Kg</p>
+                            <p class="font-bold text-gray-800">{{ $waste['waste_type'] }}</p>
+                            <p class="text-sm text-gray-500">{{ number_format($waste['total_quantity'], 1) }} Kg</p>
                         </div>
                     </div>
                 @empty
@@ -119,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const carbonData = @json($carbonData);
 
     // Garbage Chart
-    const garbageChart = new Chart(document.getElementById('garbageChart').getContext('2d'), {
+    new Chart(document.getElementById('garbageChart').getContext('2d'), {
         type: 'bar',
         data: {
             labels: garbageData.map(item => item.month),
@@ -128,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 data: garbageData.map(item => item.total_weight),
                 backgroundColor: '#6C63FF',
                 borderRadius: 5,
-                barThickness: 20,
+                barThickness: 20
             }]
         },
         options: chartConfig
@@ -140,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function() {
     gradient.addColorStop(0, 'rgba(108, 99, 255, 0.5)');
     gradient.addColorStop(1, 'rgba(108, 99, 255, 0)');
 
-    const carbonChart = new Chart(carbonCtx, {
+    new Chart(carbonCtx, {
         type: 'line',
         data: {
             labels: carbonData.map(item => item.month),

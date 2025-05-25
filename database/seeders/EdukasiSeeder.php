@@ -17,15 +17,15 @@ class EdukasiSeeder extends Seeder
 
         // Create 10 dummy edukasi records (articles and videos)
         foreach (range(1, 10) as $index) {
-            // Insert dummy data into 'edukasi' table
+            $jenis = $index % 2 == 0 ? 'artikel' : 'video';
             Edukasi::create([
-                'user_id' => 1, // Assuming user_id 1 exists
-                'judul_konten' => $faker->sentence,
-                'konten' => $faker->paragraph,
-                'gambar' => $faker->imageUrl(640, 480, 'nature'),
-                'video_url' => $faker->url,
-                'jenis_konten' => $faker->randomElement(['artikel', 'video']),
-                'kategori' => $faker->randomElement(['Daur Ulang', 'Style Hidup', 'Kesehatan', 'Lingkungan']),
+                'user_id' => 1,  // Pastikan user dengan ID 1 ada
+                'judul_konten' => $faker->sentence(),
+                'konten' => $faker->paragraph(),
+                'jenis_konten' => $jenis,
+                'kategori' => $faker->word(),
+                'gambar' => $faker->imageUrl(800, 600, 'business', true, 'Edukasi'),
+                'video_url' => $jenis === 'video' ? $faker->url() : null,
             ]);
         }
     }

@@ -33,8 +33,18 @@ class VoucherController extends Controller
 
     public function show($id)
     {
-        $voucher = Voucher::findOrFail($id);
-        return view('voucher.detail', compact('voucher'));
+        $voucher = \App\Models\Voucher::findOrFail($id);
+        $vouchers = \App\Models\Voucher::where('id', '!=', $id)->where('status', 'tersedia')->get();
+
+        // Contoh rincian, bisa diambil dari kolom lain atau diolah
+        $voucher->rincian = [
+            'Voucher berlaku selama tujuh hari',
+            'Min. pembelian Rp 100.000 di indomaret',
+            'Cuma bisa dipakai 1x',
+            'Berlaku di Indomaret daerah JABODETABEK'
+        ];
+
+        return view('user.tukar_poin.voucher_detail', compact('voucher', 'vouchers'));
     }
 
     public function update(Request $request, $id)

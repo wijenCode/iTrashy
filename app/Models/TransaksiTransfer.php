@@ -14,13 +14,19 @@ class TransaksiTransfer extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'transfer_id', 'tanggal_transaksi', 'status'
+        'user_id',
+        'jenis_transfer',
+        'bank',
+        'e_wallet',
+        'nama_penerima',
+        'nomor_rekening',
+        'nomor_ponsel',
+        'jumlah_transfer',
+        'biaya_admin',
+        'total_transfer',
+        'status',
+        'catatan'
     ];
-
-    public function transfer()
-    {
-        return $this->belongsTo(Transfer::class);
-    }
 
     public function user()
     {

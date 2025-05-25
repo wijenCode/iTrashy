@@ -15,14 +15,46 @@
         
         <div class="flex items-center space-x-4 relative">
             <!-- Notifikasi -->
-            <div class="relative">
-                <button id="notifIcon" class="focus:outline-none">
+            <div class="relative" x-data="{ openNotif: false }">
+                <button id="notifIcon" class="focus:outline-none" @click="openNotif = !openNotif">
                     <img src="{{ asset('storage/images/notifikasi.png') }}" alt="Notifications" class="w-8 h-8">
                     <!-- Badge -->
                     <span id="notifBadge" class="absolute top-0 right-0 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
                         0 <!-- Static count (for demo purposes) -->
                     </span>
                 </button>
+                <!-- Dropdown Notifikasi -->
+                <div x-show="openNotif" @click.away="openNotif = false" x-transition class="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg z-50 border border-gray-100">
+                    <div class="p-4 border-b font-bold text-gray-700">Notifikasi</div>
+                    <ul class="max-h-80 overflow-y-auto divide-y divide-gray-100">
+                        <!-- Dummy notifikasi, ganti dengan loop jika sudah ada data -->
+                        <li class="p-4 hover:bg-gray-50 cursor-pointer flex items-start gap-3">
+                            <span class="bg-green-100 text-green-600 rounded-full p-2 mt-1"><i class="fas fa-check-circle"></i></span>
+                            <div>
+                                <div class="font-semibold text-sm">Setor Sampah Diterima</div>
+                                <div class="text-xs text-gray-500">Setoran sampah kamu sudah diterima dan sedang diproses.</div>
+                                <div class="text-xs text-gray-400 mt-1">Baru saja</div>
+                            </div>
+                        </li>
+                        <li class="p-4 hover:bg-gray-50 cursor-pointer flex items-start gap-3">
+                            <span class="bg-blue-100 text-blue-600 rounded-full p-2 mt-1"><i class="fas fa-ticket-alt"></i></span>
+                            <div>
+                                <div class="font-semibold text-sm">Tukar Voucher Berhasil</div>
+                                <div class="text-xs text-gray-500">Penukaran voucher berhasil! Silakan cek riwayat.</div>
+                                <div class="text-xs text-gray-400 mt-1">2 menit lalu</div>
+                            </div>
+                        </li>
+                        <li class="p-4 hover:bg-gray-50 cursor-pointer flex items-start gap-3">
+                            <span class="bg-yellow-100 text-yellow-600 rounded-full p-2 mt-1"><i class="fas fa-exchange-alt"></i></span>
+                            <div>
+                                <div class="font-semibold text-sm">Transfer Berhasil</div>
+                                <div class="text-xs text-gray-500">Transfer poin ke Budi berhasil.</div>
+                                <div class="text-xs text-gray-400 mt-1">5 menit lalu</div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="p-2 text-center border-t"><a href="/riwayat" class="text-blue-600 text-sm hover:underline">Lihat Semua Riwayat</a></div>
+                </div>
             </div>
 
             <!-- Divider -->
