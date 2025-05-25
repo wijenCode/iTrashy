@@ -72,7 +72,7 @@
         <div class="space-y-5 mt-10">
             <div class="flex items-center justify-between">
                 <h4 class="text-2xl font-bold text-gray-800 flex items-center">
-                    <i class="fas fa-video mr-3 text-blue-500"></i>
+                    <i class="fas fa-video mr-3 text-red-500"></i>
                     Video
                 </h4>
                 <a href="{{ route('edukasi.kategori', 'video') }}" class="text-blue-500 hover:text-blue-700 flex items-center">

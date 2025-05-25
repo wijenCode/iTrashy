@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('transfer', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->string('e_wallet');
-            $table->string('no_telepon');
+            $table->string('e_wallet')->nullable();
+            $table->string('no_telepon')->nullable();
+            $table->string('bank')->nullable();
+            $table->integer('poin_ditukar');
             $table->decimal('jumlah_transfer', 15, 2);
             $table->decimal('admin_fee', 15, 2);
             $table->decimal('total_transfer', 15, 2);

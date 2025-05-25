@@ -27,5 +27,13 @@ class TransaksiSembakoSeeder extends Seeder
             'tanggal_transaksi' => now(),
             'status' => 'menunggu',
         ]);
+
+        // Insert third transaction for Sembako
+        TransaksiSembako::create([
+            'user_id' => 1,
+            'sembako_id' => 1,
+            'tanggal_transaksi' => now(),
+            'status' => 'gagal',
+        ]);
     }
 }

@@ -25,5 +25,12 @@ class TransaksiTransferSeeder extends Seeder
             'tanggal_transaksi' => now(),
             'status' => 'menunggu',
         ]);
+
+        TransaksiTransfer::create([
+            'user_id' => 1,
+            'transfer_id' => 1,
+            'tanggal_transaksi' => now(),
+            'status' => 'gagal',
+        ]);
     }
 }

@@ -76,21 +76,33 @@ class PencapaianController extends Controller
 
         // Get leaderboard data with points
         $leaderboard = DB::table('users')
-            ->leftJoin('setor_sampah', 'users.id', '=', 'setor_sampah.user_id')
-            ->leftJoin('setor_item', 'setor_sampah.id', '=', 'setor_item.setor_sampah_id')
-            ->where(function($query) {
-                $query->where('setor_sampah.status', 'selesai')
-                      ->orWhereNull('setor_sampah.status');
-            })
             ->select(
-                'users.*',
+                'users.id',
+                'users.username',
+                'users.foto_profile',
                 DB::raw('COALESCE(SUM(setor_item.berat), 0) as total_weight'),
                 DB::raw('COALESCE(SUM(setor_item.poin), 0) as total_points')
             )
-            ->groupBy('users.id')
+            ->join('setor_sampah', 'users.id', '=', 'setor_sampah.user_id')
+            ->join('setor_item', 'setor_sampah.id', '=', 'setor_item.setor_sampah_id')
+            ->where('users.role', 'user')
+            ->where('setor_sampah.status', 'selesai')
+            ->groupBy('users.id', 'users.username', 'users.foto_profile')
             ->orderByDesc('total_points')
             ->limit(10)
             ->get();
+
+        // Jika tidak ada data, tampilkan pesan
+        if ($leaderboard->isEmpty()) {
+            $leaderboard = collect([
+                (object)[
+                    'username' => 'Belum ada data',
+                    'foto_profile' => 'default.png',
+                    'total_weight' => 0,
+                    'total_points' => 0
+                ]
+            ]);
+        }
 
         // Get most collected waste types with points
         $wasteData = DB::table('setor_item')

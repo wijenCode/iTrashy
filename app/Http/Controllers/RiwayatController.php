@@ -31,6 +31,7 @@ class RiwayatController extends Controller
                     'poin' => $item->voucher->poin ?? 0,
                     'desc' => 'Penukaran voucher',
                     'kode' => $item->kode_voucher ?? null,
+                    'status' => $item->status ?? 'berhasil',
                 ];
             });
         // Sembako
@@ -45,19 +46,24 @@ class RiwayatController extends Controller
                     'poin' => $item->sembako->poin ?? 0,
                     'desc' => 'Penukaran sembako',
                     'kode' => null,
+                    'status' => $item->status ?? 'berhasil',
                 ];
             });
         // Transfer
-        $transfer = TransaksiTransfer::where('user_id', $user->id)
+        $transfer = TransaksiTransfer::with('transferDetail')
+            ->where('user_id', $user->id)
             ->get()
             ->map(function($item) {
+                $transferDetail = $item->transferDetail;
+                
                 return [
                     'type' => 'Transfer',
-                    'name' => $item->jenis_transfer,
-                    'date' => $item->created_at,
-                    'poin' => $item->jumlah_transfer,
-                    'desc' => 'Transfer ke ' . ($item->nama_penerima ?? '-'),
+                    'name' => $transferDetail ? ($transferDetail->bank ?? $transferDetail->e_wallet ?? 'Transfer') : '-',
+                    'date' => $item->tanggal_transaksi,
+                    'poin' => $transferDetail ? $transferDetail->poin_ditukar : 0,
+                    'desc' => 'Transfer ke ' . ($transferDetail ? ($transferDetail->bank ?? $transferDetail->e_wallet) : '-'),
                     'kode' => null,
+                    'status' => $item->status ?? 'berhasil',
                 ];
             });
         // Setor Sampah
@@ -73,6 +79,7 @@ class RiwayatController extends Controller
                     'poin' => $items->setorItems->sum('poin'),
                     'desc' => 'Setor sampah',
                     'kode' => null,
+                    'status' => $item->status ?? 'selesai',
                 ];
             });
         // Donasi
@@ -87,6 +94,7 @@ class RiwayatController extends Controller
                     'poin' => $item->donasi->donasi_terkumpul ?? 0,
                     'desc' => 'Donasi',
                     'kode' => null,
+                    'status' => $item->status ?? 'berhasil',
                 ];
             });
 

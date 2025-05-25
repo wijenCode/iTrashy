@@ -25,5 +25,12 @@ class TransaksiDonasiSeeder extends Seeder
             'tanggal_transaksi' => now(),
             'status' => 'menunggu',
         ]);
+
+        TransaksiDonasi::create([
+            'user_id' => 1,
+            'donasi_id' => 1,
+            'tanggal_transaksi' => now(),
+            'status' => 'gagal',
+        ]);
     }
 }
