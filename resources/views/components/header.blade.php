@@ -88,3 +88,5 @@
         </div>
     </div>
 </header>
+
+@include('user.notifikasi.index')

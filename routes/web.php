@@ -69,6 +69,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/donasi', [DonasiController::class, 'index'])->name('donasi.index');
     Route::get('/transfer', [TransferController::class, 'index'])->name('transfer.index');
     Route::post('/transfer', [TransferController::class, 'store'])->name('transfer.store');
+    Route::get('/transfer/detail', [TransferController::class, 'detail'])->name('transfer.detail');
     Route::get('/transfer/{id}', [TransferController::class, 'show'])->name('transfer.show');
 
     Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');

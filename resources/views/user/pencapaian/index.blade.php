@@ -36,7 +36,7 @@
                 
                 <!-- Scrollable Area -->
                 <div class="mt-4 space-y-4 max-h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 scrollbar-track-purple-300">
-                    @forelse($leaderboard as $index => $user)
+                    @forelse($leaderboard->where('role', 'user') as $index => $user)
                         <div class="flex items-center bg-gray-200 p-4 rounded-lg shadow-sm hover:bg-purple-600 transition">
                             <!-- Rank -->
                             <div class="flex items-center justify-center bg-white font-bold text-xl w-12 h-12 rounded-full">

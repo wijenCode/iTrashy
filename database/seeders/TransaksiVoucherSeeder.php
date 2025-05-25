@@ -25,5 +25,12 @@ class TransaksiVoucherSeeder extends Seeder
             'tanggal_transaksi' => now(),
             'status' => 'menunggu',
         ]);
+
+        TransaksiVoucher::create([
+            'user_id' => 1,
+            'voucher_id' => 1,
+            'tanggal_transaksi' => now(),
+            'status' => 'gagal',
+        ]);
     }
 }

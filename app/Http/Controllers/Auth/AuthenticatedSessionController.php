@@ -36,7 +36,7 @@ class AuthenticatedSessionController extends Controller
             return redirect()->intended(route('admin.dashboard'));
         } else {
             // Redirect ke halaman user dashboard
-            return redirect()->intended(route('dashboard'));
+            return redirect()->intended(route('dashboard.index  '));
         }
     }
     

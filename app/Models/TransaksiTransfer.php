@@ -15,21 +15,19 @@ class TransaksiTransfer extends Model
 
     protected $fillable = [
         'user_id',
-        'jenis_transfer',
-        'bank',
-        'e_wallet',
-        'nama_penerima',
-        'nomor_rekening',
-        'nomor_ponsel',
-        'jumlah_transfer',
-        'biaya_admin',
-        'total_transfer',
+        'transfer_id',
+        'tanggal_transaksi',
         'status',
-        'catatan'
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    // Relasi ke detail transfer di tabel 'transfer'
+    public function transferDetail()
+    {
+        return $this->belongsTo(\App\Models\TransferDetail::class, 'transfer_id');
     }
 }
