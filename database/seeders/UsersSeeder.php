@@ -65,7 +65,7 @@ class UsersSeeder extends Seeder
                 'poin_terkumpul' => 2000,
                 'sampah_terkumpul' => 250.75,
                 'level' => 'master',
-                'role' => 'user',
+                'role' => 'driver',
                 'remember_token' => Str::random(10),
                 'email_verified_at' => Carbon::now(),
                 'created_at' => now(),

@@ -17,6 +17,7 @@ class TransferSeeder extends Seeder
             'user_id' => 1,  // assuming user with id 1 exists
             'e_wallet' => 'DANA',
             'no_telepon' => '081234567890',
+            'poin_ditukar' => 100,
             'jumlah_transfer' => 1000000,
             'admin_fee' => 5000,
             'total_transfer' => 1005000,
@@ -29,6 +30,7 @@ class TransferSeeder extends Seeder
             'user_id' => 2,  // assuming user with id 2 exists
             'e_wallet' => 'OVO',
             'no_telepon' => '089876543210',
+            'poin_ditukar' => 50,
             'jumlah_transfer' => 500000,
             'admin_fee' => 2500,
             'total_transfer' => 502500,

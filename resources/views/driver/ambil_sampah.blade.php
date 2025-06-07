@@ -123,17 +123,17 @@
                     
                     <!-- Action Buttons -->
                     <div class="mt-4 lg:mt-0 lg:ml-6 flex flex-col space-y-2">
-                        <button onclick="showDetailModal({{ $setor->id }})" 
+                        <button data-id="{{ $setor->id }}" id="detail-{{ $setor->id }}"
                                 class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors">
                             <i class="fas fa-eye mr-2"></i>Detail
                         </button>
                         
-                        <button onclick="showTerimaModal({{ $setor->id }})" 
+                        <button data-id="{{ $setor->id }}" id="terima-{{ $setor->id }}"
                                 class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors">
                             <i class="fas fa-check mr-2"></i>Terima
                         </button>
                         
-                        <button onclick="showTolakModal({{ $setor->id }})" 
+                        <button data-id="{{ $setor->id }}" id="tolak-{{ $setor->id }}"
                                 class="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition-colors">
                             <i class="fas fa-times mr-2"></i>Tolak
                         </button>
@@ -199,33 +199,60 @@
 
 @push('scripts')
 <script>
-function showTerimaModal(id) {
-    document.getElementById('terimaForm').action = `/driver/terima-pesanan/${id}`;
-    document.getElementById('terimaModal').classList.remove('hidden');
-}
+document.addEventListener('DOMContentLoaded', function() {
+    // Fungsi untuk menampilkan modal Detail
+    document.querySelectorAll('[id^="detail-"]').forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.dataset.id;
+            console.log('Menampilkan detail untuk pesanan ID:', id);
+            alert('Detail pesanan ID: ' + id + ' (Fitur detail lengkap akan datang)');
+        });
+    });
 
-function hideTerimaModal() {
-    document.getElementById('terimaModal').classList.add('hidden');
-}
+    // Fungsi untuk menampilkan modal Terima
+    document.querySelectorAll('[id^="terima-"]').forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.dataset.id;
+            console.log('Membuka modal Terima untuk pesanan ID:', id);
+            document.getElementById('terimaForm').action = `/driver/terima-pesanan/${id}`;
+            document.getElementById('terimaModal').classList.remove('hidden');
+        });
+    });
 
-function showTolakModal(id) {
-    document.getElementById('tolakForm').action = `/driver/tolak-pesanan/${id}`;
-    document.getElementById('tolakModal').classList.remove('hidden');
-}
+    // Fungsi untuk menyembunyikan modal Terima
+    document.getElementById('terimaModal').addEventListener('click', function(e) {
+        if (e.target.id === 'terimaModal') {
+            this.classList.add('hidden');
+        }
+    });
 
-function hideTolakModal() {
-    document.getElementById('tolakModal').classList.add('hidden');
-    document.getElementById('tolakForm').reset();
-}
+    // Fungsi untuk tombol batal di modal Terima
+    document.querySelector('#terimaModal button[onclick^="hideTerimaModal"]').addEventListener('click', function() {
+        document.getElementById('terimaModal').classList.add('hidden');
+    });
 
-// Close modals when clicking outside
-document.addEventListener('click', function(e) {
-    if (e.target.id === 'terimaModal') {
-        hideTerimaModal();
-    }
-    if (e.target.id === 'tolakModal') {
-        hideTolakModal();
-    }
+    // Fungsi untuk menampilkan modal Tolak
+    document.querySelectorAll('[id^="tolak-"]').forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.dataset.id;
+            console.log('Membuka modal Tolak untuk pesanan ID:', id);
+            document.getElementById('tolakForm').action = `/driver/tolak-pesanan/${id}`;
+            document.getElementById('tolakModal').classList.remove('hidden');
+        });
+    });
+
+    // Fungsi untuk menyembunyikan modal Tolak
+    document.getElementById('tolakModal').addEventListener('click', function(e) {
+        if (e.target.id === 'tolakModal') {
+            this.classList.add('hidden');
+        }
+    });
+
+    // Fungsi untuk tombol batal di modal Tolak
+    document.querySelector('#tolakModal button[onclick^="hideTolakModal"]').addEventListener('click', function() {
+        document.getElementById('tolakModal').classList.add('hidden');
+        document.getElementById('tolakForm').reset();
+    });
 });
 </script>
 @endpush

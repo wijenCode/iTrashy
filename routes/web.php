@@ -189,4 +189,5 @@ Route::middleware(['auth', 'role:driver'])->prefix('driver')->name('driver.')->g
     Route::post('/selesaikan-penjemputan/{id}', [DriverController::class, 'selesaikanPenjemputan'])->name('selesaikan.penjemputan');
 });
 
+
 require __DIR__.'/auth.php';

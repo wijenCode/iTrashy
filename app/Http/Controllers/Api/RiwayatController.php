@@ -13,6 +13,7 @@ use App\Models\SetorItem;
 use App\Models\JenisSampah;
 use App\Models\TransferDetail;
 use Carbon\Carbon;
+use App\Http\Resources\RiwayatResource;
 
 class RiwayatController extends Controller
 {
@@ -191,20 +192,7 @@ class RiwayatController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'data' => [
-                'current_page' => (int)$page,
-                'data' => $paginatedData->values(),
-                'first_page_url' => url("/api/riwayat?page=1"),
-                'from' => $offset + 1,
-                'last_page' => ceil($riwayat->count() / $perPage),
-                'last_page_url' => url("/api/riwayat?page=" . ceil($riwayat->count() / $perPage)),
-                'next_page_url' => $page < ceil($riwayat->count() / $perPage) ? url("/api/riwayat?page=" . ($page + 1)) : null,
-                'path' => url("/api/riwayat"),
-                'per_page' => (int)$perPage,
-                'prev_page_url' => $page > 1 ? url("/api/riwayat?page=" . ($page - 1)) : null,
-                'to' => $offset + $paginatedData->count(),
-                'total' => $riwayat->count()
-            ]
+            'data' => RiwayatResource::collection($paginatedData)->response()->getData(true)
         ]);
     }
 
@@ -241,9 +229,6 @@ class RiwayatController extends Controller
                 ], 400);
         }
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $data
-        ]);
+        return new RiwayatResource($data);
     }
 } 

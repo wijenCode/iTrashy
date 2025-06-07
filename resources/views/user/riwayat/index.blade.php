@@ -51,7 +51,7 @@
                             @if($item['type'] === 'Transfer')
                                 Jumlah Poin <span class="font-semibold text-blue-600">- {{ number_format($item['poin']) }} Poin</span>
                             @elseif($item['type'] === 'Setor Sampah')
-                                Jumlah Saldo <span class="font-semibold text-blue-600">+ Rp {{ number_format($item['poin'] * 1000) }}</span>
+                                Jumlah Poin <span class="font-semibold text-blue-600">+ {{ number_format($item['poin']) }} Poin</span>
                             @else
                                 Jumlah Poin <span class="font-semibold text-blue-600">{{ $item['type'] === 'Voucher' || $item['type'] === 'Sembako' ? '- ' : '+ ' }}{{ number_format($item['poin']) }} Poin</span>
                             @endif
@@ -152,7 +152,6 @@ detailBtns.forEach(btn => {
         const data = JSON.parse(this.getAttribute('data-detail'));
         
         // Jika tipe transaksi adalah Setor Sampah, arahkan ke halaman riwayat.detail
-        // Jika tipe transaksi adalah Setor Sampah, arahkan ke halaman riwayat.detail
         if (data.type === 'Setor Sampah') {
             // Arahkan ke halaman detail riwayat dengan ID yang sesuai
             window.location.href = "{{ route('riwayat.detail', ['id' => ':id']) }}".replace(':id', data.id);
@@ -166,7 +165,7 @@ detailBtns.forEach(btn => {
         if(data.type === 'Transfer') {
             html += `<div class='mb-2 text-sm text-gray-500'>Poin Ditukar: <span class='font-semibold text-blue-600'>- ${parseInt(data.poin).toLocaleString('id-ID')} Poin</span></div>`;
         } else if(data.type === 'Setor Sampah') {
-            html += `<div class='mb-2 text-sm text-gray-500'>Jumlah Saldo: <span class='font-semibold text-blue-600'>+ Rp ${parseInt(data.poin).toLocaleString('id-ID')}</span></div>`;
+            html += `<div class='mb-2 text-sm text-gray-500'>Jumlah Poin: <span class='font-semibold text-blue-600'>+ ${parseInt(data.poin).toLocaleString('id-ID')} Poin</span></div>`;
         } else {
             html += `<div class='mb-2 text-sm text-gray-500'>Jumlah Poin: <span class='font-semibold text-blue-600'>${data.type === 'Voucher' || data.type === 'Sembako' ? '- ' : '+ '}${parseInt(data.poin).toLocaleString('id-ID')} Poin</span></div>`;
         }

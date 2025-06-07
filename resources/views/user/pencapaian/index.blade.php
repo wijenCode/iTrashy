@@ -36,7 +36,7 @@
                 
                 <!-- Scrollable Area -->
                 <div class="mt-4 space-y-4 max-h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 scrollbar-track-purple-300">
-                    @forelse($leaderboard->where('role', 'user') as $index => $user)
+                    @forelse($leaderboard as $index => $user)
                         <div class="flex items-center bg-gray-200 p-4 rounded-lg shadow-sm hover:bg-purple-600 transition">
                             <!-- Rank -->
                             <div class="flex items-center justify-center bg-white font-bold text-xl w-12 h-12 rounded-full">
@@ -51,7 +51,7 @@
                             <!-- User Info -->
                             <div class="ml-4">
                                 <h3 class="text-lg font-medium">{{ $user->username }}</h3>
-                                <p class="text-sm">Total Berat: <strong>{{ number_format($user->total_weight, 1) }} Kg</strong></p>
+                                <p class="text-sm">Total Berat: <strong>{{ number_format($user->sampah_terkumpul, 1) }} Kg</strong></p>
                             </div>
                         </div>
                     @empty

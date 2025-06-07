@@ -115,17 +115,17 @@
                     
                     <!-- Action Buttons -->
                     <div class="mt-4 lg:mt-0 lg:ml-6 flex flex-col space-y-2">
-                        <button onclick="showEditModal({{ $setor->id }})" 
+                        <button data-id="{{ $setor->id }}" id="edit-{{ $setor->id }}"
                                 class="bg-yellow-500 text-white px-6 py-2 rounded-lg hover:bg-yellow-600 transition-colors">
                             <i class="fas fa-edit mr-2"></i>Edit Data
                         </button>
                         
-                        <button onclick="showSelesaiModal({{ $setor->id }})" 
+                        <button data-id="{{ $setor->id }}" id="selesai-{{ $setor->id }}"
                                 class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors">
                             <i class="fas fa-check-circle mr-2"></i>Selesai
                         </button>
                         
-                        <button onclick="showDetailModal({{ $setor->id }})" 
+                        <button data-id="{{ $setor->id }}" id="detail-{{ $setor->id }}"
                                 class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors">
                             <i class="fas fa-eye mr-2"></i>Detail
                         </button>
@@ -216,86 +216,129 @@
 <script>
 let currentSetorData = null;
 
-function showEditModal(id) {
-    // Cari data setor berdasarkan id
-    const setorData = @json($setorSampah);
-    currentSetorData = setorData.find(item => item.id == id);
-    
-    if (!currentSetorData) return;
-    
-    // Set form action
-    document.getElementById('editForm').action = `/driver/edit-penjemputan/${id}`;
-    
-    // Generate form fields untuk edit berat
-    const editSampahList = document.getElementById('editSampahList');
-    editSampahList.innerHTML = '';
-    
-    currentSetorData.setor_items.forEach((item, index) => {
-        const div = document.createElement('div');
-        div.className = 'flex items-center justify-between bg-gray-50 p-3 rounded';
-        div.innerHTML = `
-            <div class="flex-1">
-                <span class="font-medium">${item.jenis_sampah.nama_sampah}</span>
-                <span class="text-sm text-gray-600 block">${item.jenis_sampah.poin_per_kg} poin/kg</span>
-            </div>
-            <div class="flex items-center space-x-2">
-                <button type="button" onclick="changeBerat(${index}, -0.01)" 
-                        class="w-8 h-8 flex items-center justify-center bg-red-100 text-red-600 rounded-full hover:bg-red-200">
-                    <i class="fas fa-minus text-xs"></i>
-                </button>
-                <input type="number" name="sampah_berat[]" 
-                       id="berat_${index}" 
-                       value="${item.berat}" 
-                       step="0.01" 
-                       min="0" 
-                       class="w-20 text-center border border-gray-300 rounded px-2 py-1"
-                       onchange="updateBerat(${index}, this.value)">
-                <span class="text-sm">kg</span>
-                <button type="button" onclick="changeBerat(${index}, 0.25)" 
-                        class="w-8 h-8 flex items-center justify-center bg-green-100 text-green-600 rounded-full hover:bg-green-200">
-                    <i class="fas fa-plus text-xs"></i>
-                </button>
-            </div>
-        `;
-        editSampahList.appendChild(div);
+document.addEventListener('DOMContentLoaded', function() {
+    // Dapatkan semua data setor sampah dari Blade sebagai JSON
+    const allSetorSampahData = @json($setorSampah);
+
+    // Event Listener untuk tombol Edit Data
+    document.querySelectorAll('[id^="edit-"]').forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.dataset.id;
+            currentSetorData = allSetorSampahData.find(item => item.id == id);
+            
+            if (!currentSetorData) return;
+            
+            // Set form action
+            document.getElementById('editForm').action = `/driver/edit-penjemputan/${id}`;
+            
+            // Generate form fields untuk edit berat
+            const editSampahList = document.getElementById('editSampahList');
+            editSampahList.innerHTML = '';
+            
+            currentSetorData.setor_items.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'flex items-center justify-between bg-gray-50 p-3 rounded';
+                div.innerHTML = `
+                    <div class="flex-1">
+                        <span class="font-medium">${item.jenis_sampah.nama_sampah}</span>
+                        <span class="text-sm text-gray-600 block">${item.jenis_sampah.poin_per_kg} poin/kg</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button type="button" class="w-8 h-8 flex items-center justify-center bg-red-100 text-red-600 rounded-full hover:bg-red-200" data-index="${index}" data-change="-0.01">
+                            <i class="fas fa-minus text-xs"></i>
+                        </button>
+                        <input type="number" name="sampah_berat[]" 
+                               id="berat_${index}" 
+                               value="${item.berat}" 
+                               step="0.01" 
+                               min="0" 
+                               class="w-20 text-center border border-gray-300 rounded px-2 py-1" data-index="${index}">
+                        <span class="text-sm">kg</span>
+                        <button type="button" class="w-8 h-8 flex items-center justify-center bg-green-100 text-green-600 rounded-full hover:bg-green-200" data-index="${index}" data-change="0.25">
+                            <i class="fas fa-plus text-xs"></i>
+                        </button>
+                    </div>
+                `;
+                editSampahList.appendChild(div);
+            });
+
+            // Attach event listeners for changeBerat and updateBerat to the new elements
+            editSampahList.querySelectorAll('button[data-change]').forEach(button => {
+                button.addEventListener('click', function() {
+                    const index = parseInt(this.dataset.index);
+                    const change = parseFloat(this.dataset.change);
+                    changeBerat(index, change);
+                });
+            });
+
+            editSampahList.querySelectorAll('input[type="number"]').forEach(input => {
+                input.addEventListener('change', function() {
+                    const index = parseInt(this.dataset.index);
+                    updateBerat(index, this.value);
+                });
+            });
+            
+            document.getElementById('editModal').classList.remove('hidden');
+        });
     });
-    
-    document.getElementById('editModal').classList.remove('hidden');
-}
 
-function hideEditModal() {
-    document.getElementById('editModal').classList.add('hidden');
-    document.getElementById('editForm').reset();
-}
+    // Fungsi untuk menyembunyikan modal Edit
+    document.getElementById('editModal').addEventListener('click', function(e) {
+        if (e.target.id === 'editModal') {
+            this.classList.add('hidden');
+            document.getElementById('editForm').reset(); // Reset form saat modal disembunyikan
+        }
+    });
 
-function changeBerat(index, change) {
-    const input = document.getElementById(`berat_${index}`);
-    const newValue = Math.max(0, parseFloat(input.value) + change);
-    input.value = newValue.toFixed(2);
-}
+    // Fungsi untuk tombol batal di modal Edit
+    document.querySelector('#editModal button[type="button"]').addEventListener('click', function() {
+        document.getElementById('editModal').classList.add('hidden');
+        document.getElementById('editForm').reset();
+    });
 
-function updateBerat(index, value) {
-    const input = document.getElementById(`berat_${index}`);
-    input.value = Math.max(0, parseFloat(value)).toFixed(2);
-}
+    // Event Listener untuk tombol Selesai
+    document.querySelectorAll('[id^="selesai-"]').forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.dataset.id;
+            document.getElementById('selesaiForm').action = `/driver/selesaikan-penjemputan/${id}`;
+            document.getElementById('selesaiModal').classList.remove('hidden');
+        });
+    });
 
-function showSelesaiModal(id) {
-    document.getElementById('selesaiForm').action = `/driver/selesaikan-penjemputan/${id}`;
-    document.getElementById('selesaiModal').classList.remove('hidden');
-}
+    // Fungsi untuk menyembunyikan modal Selesai
+    document.getElementById('selesaiModal').addEventListener('click', function(e) {
+        if (e.target.id === 'selesaiModal') {
+            this.classList.add('hidden');
+        }
+    });
 
-function hideSelesaiModal() {
-    document.getElementById('selesaiModal').classList.add('hidden');
-}
+    // Fungsi untuk tombol batal di modal Selesai
+    document.querySelector('#selesaiModal button[onclick^="hideSelesaiModal"]').addEventListener('click', function() {
+        document.getElementById('selesaiModal').classList.add('hidden');
+    });
 
-// Close modals when clicking outside
-document.addEventListener('click', function(e) {
-    if (e.target.id === 'editModal') {
-        hideEditModal();
+    // Event Listener untuk tombol Detail
+    document.querySelectorAll('[id^="detail-"]').forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.dataset.id;
+            console.log('Menampilkan detail untuk pesanan ID:', id);
+            alert('Detail pesanan ID: ' + id + ' (Fitur detail lengkap akan datang)');
+        });
+    });
+
+    // Fungsi helper untuk mengubah berat (memperbaiki syntax error)
+    function changeBerat(index, change) {
+        const input = document.getElementById(`berat_${index}`);
+        const newValue = Math.max(0, parseFloat(input.value) + change);
+        input.value = newValue.toFixed(2);
     }
-    if (e.target.id === 'selesaiModal') {
-        hideSelesaiModal();
+
+    // Fungsi helper untuk memperbarui berat (memperbaiki syntax error)
+    function updateBerat(index, value) {
+        const input = document.getElementById(`berat_${index}`);
+        input.value = Math.max(0, parseFloat(value)).toFixed(2);
     }
 });
+
 </script>
 @endpush

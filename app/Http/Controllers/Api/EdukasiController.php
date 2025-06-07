@@ -5,49 +5,26 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Edukasi;
 use Illuminate\Http\Request;
+use App\Http\Resources\EdukasiResource;
 use Illuminate\Support\Facades\Storage;
 
 class EdukasiController extends Controller
 {
     /**
-     * Get all edukasi content with pagination
+     * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $perPage = $request->get('per_page', 10);
-        $edukasi = Edukasi::orderBy('created_at', 'desc')
-            ->paginate($perPage);
-
-        return response()->json([
-            'status' => 'success',
-            'data' => $edukasi
-        ]);
+        $edukasi = Edukasi::all();
+        return EdukasiResource::collection($edukasi);
     }
 
     /**
-     * Get edukasi content by ID
+     * Display the specified resource.
      */
-    public function show($id)
+    public function show(Edukasi $edukasi)
     {
-        $edukasi = Edukasi::findOrFail($id);
-        
-        // Get related content
-        $relatedContent = Edukasi::where('id', '!=', $id)
-            ->where(function($query) use ($edukasi) {
-                $query->where('kategori', $edukasi->kategori)
-                      ->orWhere('jenis_konten', $edukasi->jenis_konten);
-            })
-            ->orderBy('created_at', 'desc')
-            ->limit(3)
-            ->get();
-
-        return response()->json([
-            'status' => 'success',
-            'data' => [
-                'edukasi' => $edukasi,
-                'related_content' => $relatedContent
-            ]
-        ]);
+        return new EdukasiResource($edukasi);
     }
 
     /**

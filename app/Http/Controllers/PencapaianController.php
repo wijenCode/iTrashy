@@ -69,6 +69,7 @@ class PencapaianController extends Controller
         $leaderboard = DB::table('users')
             ->leftJoin('setor_sampah', 'users.id', '=', 'setor_sampah.user_id')
             ->leftJoin('setor_item', 'setor_sampah.id', '=', 'setor_item.setor_sampah_id')
+            ->where('users.role', 'user')
             ->where(function($query) {
                 $query->where('setor_sampah.status', 'selesai')
                       ->orWhereNull('setor_sampah.status');
@@ -90,7 +91,7 @@ class PencapaianController extends Controller
                 'users.poin_terkumpul',
                 'users.sampah_terkumpul'
             )
-            ->orderByDesc('total_weight')
+            ->orderByDesc('users.sampah_terkumpul')
             ->limit(10)
             ->get();
 

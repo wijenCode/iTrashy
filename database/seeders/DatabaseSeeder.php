@@ -19,7 +19,7 @@ use App\Models\TransaksiVoucher;
 use App\Models\Transfer;
 use App\Models\Voucher;
 
-class AdminSeeder extends Seeder
+class DatabaseSeeder extends Seeder
 {
     public function run()
     {
@@ -37,10 +37,11 @@ class AdminSeeder extends Seeder
         $this->call(SetorItemSeeder::class);           // Seed setor item after setor sampah
         $this->call(SembakoSeeder::class);             // Seed sembako if needed
         $this->call(VoucherSeeder::class);             // Seed voucher
-        $this->call(TransaksiDonasiSeeder::class);     // Seed transaksi donasi
+        $this->call(DonasiSeeder::class);              // Seed donasi first
+        $this->call(TransaksiDonasiSeeder::class);     // Seed transaksi donasi after donasi
         $this->call(TransaksiSembakoSeeder::class);    // Seed transaksi sembako
-        $this->call(TransaksiTransferSeeder::class);   // Seed transaksi transfer
+        $this->call(TransferSeeder::class);             // Seed transfer first
+        $this->call(TransaksiTransferSeeder::class);   // Seed transaksi transfer after transfer
         $this->call(TransaksiVoucherSeeder::class);    // Seed transaksi voucher
-        $this->call(DonasiSeeder::class);              // Seed donasi at last if it depends on previous data
     }
 }
