@@ -1,4 +1,7 @@
 <?php
+/**
+ * Model SetorSampah
+ */
 
 namespace App\Models;
 
@@ -9,6 +12,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SetorSampah extends Model
 {
+//  * Model ini merepresentasikan data penyetoran sampah oleh user.
+//  * Fungsinya mencakup:
+//  * - Relasi dengan user (penyetor) dan driver (pengambil)
+//  * - Menyimpan informasi alamat, status, waktu setor & ambil
+//  * - Mengelola daftar item yang disetorkan
+//  * - Menghitung total poin & berat dari item
+//  * - Membuat kode kredensial unik untuk validasi
     use HasFactory;
 
     protected $table = 'setor_sampah';
@@ -30,6 +40,9 @@ class SetorSampah extends Model
         'tanggal_diambil' => 'datetime',
     ];
 
+//  * Status yang digunakan:
+//  * - menunggu, dikonfirmasi, diambil, ditolak, selesai
+   
     // Status konstanta
     const STATUS_MENUNGGU = 'menunggu';
     const STATUS_DIKONFIRMASI = 'dikonfirmasi';
