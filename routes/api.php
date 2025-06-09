@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\EdukasiController;
 use App\Http\Controllers\Api\RiwayatController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\TransferController;
+use App\Http\Controllers\Api\TukarPoinController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,15 +59,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/riwayat', [RiwayatController::class, 'index']);
     Route::get('/riwayat/{type}/{id}', [RiwayatController::class, 'show']);
 
-    // Edukasi API Routes
-    Route::prefix('edukasi')->group(function () {
-        Route::get('/', [EdukasiController::class, 'index']);
-        Route::get('/{id}', [EdukasiController::class, 'show']);
-        Route::get('/category/{category}', [EdukasiController::class, 'byCategory']);
-        Route::get('/type/{type}', [EdukasiController::class, 'byType']);
-        Route::get('/categories', [EdukasiController::class, 'categories']);
-        Route::get('/types', [EdukasiController::class, 'types']);
-        Route::get('/search', [EdukasiController::class, 'search']);
+// Edukasi API Routes
+Route::prefix('edukasi')->group(function () {
+    Route::get('/', [EdukasiController::class, 'index']);
+    Route::get('/{id}', [EdukasiController::class, 'show']);
+    Route::get('/category/{category}', [EdukasiController::class, 'byCategory']);
+    Route::get('/type/{type}', [EdukasiController::class, 'byType']);
+    Route::get('/categories', [EdukasiController::class, 'categories']);
+    Route::get('/types', [EdukasiController::class, 'types']);
+    Route::get('/search', [EdukasiController::class, 'search']);
     });
 
     // Notifikasi API untuk user
@@ -79,4 +80,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Routes for Transfer API
     Route::post('transfer-poin', [TransferController::class, 'transferPoin']);
+
+    // Routes for Tukar Poin API
+    Route::prefix('tukar-poin')->group(function () {
+        Route::get('/', [TukarPoinController::class, 'index']);
+        Route::post('/voucher/{id}/tukar', [TukarPoinController::class, 'tukarVoucher']);
+        Route::post('/sembako/{id}/tukar', [TukarPoinController::class, 'tukarSembako']);
+    });
 });

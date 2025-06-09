@@ -14,7 +14,7 @@ class Transfer extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'e_wallet', 'no_telepon', 'jumlah_transfer', 'admin_fee', 'total_transfer'
+        'user_id', 'e_wallet', 'no_telepon', 'bank', 'poin_ditukar', 'jumlah_transfer', 'admin_fee', 'total_transfer'
     ];
 
     public function transaksiTransfer()

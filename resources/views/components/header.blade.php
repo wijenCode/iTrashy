@@ -28,7 +28,7 @@
                     <div class="p-4 border-b font-bold text-gray-700 flex justify-between items-center">
                         <span>Notifikasi</span>
                         <button type="button" onclick="markAllAsRead()" class="text-sm text-blue-600 hover:underline">Tandai semua dibaca</button>
-                    </div>
+                            </div>
                     <ul id="notificationsList" class="max-h-80 overflow-y-auto divide-y divide-gray-100">
                         <!-- Notifications will be loaded here -->
                     </ul>
