@@ -20,6 +20,7 @@ use App\Http\Controllers\TransferController;
 use App\Http\Controllers\TukarPoinController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\DriverController;
+use App\Http\Controllers\NotificationController;
 
 
 // Rute untuk logout
@@ -172,6 +173,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 Route::middleware(['auth', 'role:driver'])->prefix('driver')->name('driver.')->group(function () {
     // Halaman ambil sampah
     Route::get('/ambil-sampah', [DriverController::class, 'ambilSampah'])->name('ambil.sampah');
+    Route::get('/ambil-sampah/{id}', [DriverController::class, 'showSetorSampahDetail'])->name('ambil.sampah.detail');
     
     // Terima pesanan
     Route::post('/terima-pesanan/{id}', [DriverController::class, 'terimaPesanan'])->name('terima.pesanan');
@@ -189,5 +191,12 @@ Route::middleware(['auth', 'role:driver'])->prefix('driver')->name('driver.')->g
     Route::post('/selesaikan-penjemputan/{id}', [DriverController::class, 'selesaikanPenjemputan'])->name('selesaikan.penjemputan');
 });
 
+// Notification Routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/notifications', [NotificationController::class, 'index']);
+    Route::post('/notifications/{id}/mark-as-read', [NotificationController::class, 'markAsRead']);
+    Route::post('/notifications/mark-all-as-read', [NotificationController::class, 'markAllAsRead']);
+    Route::get('/notifications/unread-count', [NotificationController::class, 'getUnreadCount']);
+});
 
 require __DIR__.'/auth.php';

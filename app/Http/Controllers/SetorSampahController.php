@@ -6,11 +6,15 @@ use Illuminate\Http\Request;
 use App\Models\JenisSampah;
 use App\Models\SetorSampah;
 use App\Models\SetorItem;
+use App\Models\User;
+use App\Traits\CreatesNotifications;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class SetorSampahController extends Controller
 {
+    use CreatesNotifications;
+
     /**
      * Display the setor sampah form.
      *
@@ -94,10 +98,20 @@ class SetorSampahController extends Controller
 
             DB::commit();
 
+            // --- Notifikasi untuk Driver --- START
+            $drivers = User::where('role', 'driver')->get();
+            $userName = Auth::user()->username; // Get the current user's name
+            $userAddress = $setorSampah->alamat; // Get the address from the new setor sampah
+            $setorId = $setorSampah->id;
+
+            foreach ($drivers as $driver) {
+                $this->notifyNewSetorSampahForDriver($driver->id, $userName, $userAddress, $setorId);
+            }
+            // --- Notifikasi untuk Driver --- END
+
             return redirect()->route('riwayat.detail', $setorSampah->id)->with('success', 
                 'Permintaan setor sampah berhasil dikirim! Kode kredensial Anda: <strong>' . $setorSampah->kode_kredensial . '</strong><br>Simpan kode ini untuk diberikan kepada driver saat penjemputan.'
             );
-
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());

@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\SetorSampahController;
 use App\Http\Controllers\Api\EdukasiController;
 use App\Http\Controllers\Api\RiwayatController;
+use App\Http\Controllers\Api\NotificationController;
+use App\Http\Controllers\Api\TransferController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,15 +57,26 @@ Route::middleware('auth:sanctum')->group(function () {
     // Riwayat API Routes
     Route::get('/riwayat', [RiwayatController::class, 'index']);
     Route::get('/riwayat/{type}/{id}', [RiwayatController::class, 'show']);
-});
 
-// Edukasi API Routes
-Route::prefix('edukasi')->group(function () {
-    Route::get('/', [EdukasiController::class, 'index']);
-    Route::get('/{id}', [EdukasiController::class, 'show']);
-    Route::get('/category/{category}', [EdukasiController::class, 'byCategory']);
-    Route::get('/type/{type}', [EdukasiController::class, 'byType']);
-    Route::get('/categories', [EdukasiController::class, 'categories']);
-    Route::get('/types', [EdukasiController::class, 'types']);
-    Route::get('/search', [EdukasiController::class, 'search']);
+    // Edukasi API Routes
+    Route::prefix('edukasi')->group(function () {
+        Route::get('/', [EdukasiController::class, 'index']);
+        Route::get('/{id}', [EdukasiController::class, 'show']);
+        Route::get('/category/{category}', [EdukasiController::class, 'byCategory']);
+        Route::get('/type/{type}', [EdukasiController::class, 'byType']);
+        Route::get('/categories', [EdukasiController::class, 'categories']);
+        Route::get('/types', [EdukasiController::class, 'types']);
+        Route::get('/search', [EdukasiController::class, 'search']);
+    });
+
+    // Notifikasi API untuk user
+    Route::prefix('notifications')->group(function () {
+        Route::get('/', [NotificationController::class, 'index']);
+        Route::post('/{id}/mark-as-read', [NotificationController::class, 'markAsRead']);
+        Route::post('/mark-all-as-read', [NotificationController::class, 'markAllAsRead']);
+        Route::get('/unread-count', [NotificationController::class, 'unreadCount']);
+    });
+
+    // Routes for Transfer API
+    Route::post('transfer-poin', [TransferController::class, 'transferPoin']);
 });

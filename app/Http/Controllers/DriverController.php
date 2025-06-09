@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 use App\Models\SetorSampah;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Traits\CreatesNotifications;
 
 class DriverController extends Controller
 {
+    use CreatesNotifications;
+
     /**
      * Halaman daftar sampah tersedia untuk diambil
      */
@@ -64,6 +67,9 @@ class DriverController extends Controller
             // TIDAK perlu generate kode kredensial di sini karena sudah di-generate saat user membuat pesanan
             $setorSampah->save();
 
+            // Kirim notifikasi ke user
+            $this->notifySetorSampahDiterima($setorSampah->user_id, $setorSampah->id);
+
             DB::commit();
 
             return redirect()->route('driver.penjemputan.saya')->with('success', 'Pesanan berhasil diterima!');
@@ -108,6 +114,9 @@ class DriverController extends Controller
             // Simpan kembali ke database
             $setorSampah->driver_tolak = json_encode($driverTolak);
             $setorSampah->save();
+
+            // Kirim notifikasi ke user
+            $this->notifySetorSampahDitolak($setorSampah->user_id, $setorSampah->id, $request->alasan);
 
             DB::commit();
 
@@ -209,7 +218,7 @@ class DriverController extends Controller
             }
 
             // Update status
-            $setorSampah->status = 'selesai'; // Menggunakan string 'selesai' sesuai enum di database
+            $setorSampah->status = 'selesai';
             $setorSampah->save();
 
             // Update poin dan sampah terkumpul user
@@ -221,6 +230,9 @@ class DriverController extends Controller
             $user->sampah_terkumpul = ($user->sampah_terkumpul ?? 0) + $totalBerat;
             $user->save();
 
+            // Kirim notifikasi ke user
+            $this->notifySetorSampahSelesai($setorSampah->user_id, $setorSampah->id, $totalPoin);
+
             DB::commit();
 
             return redirect()->back()->with('success', 'Penjemputan berhasil diselesaikan! Poin user telah diupdate.');
@@ -228,6 +240,19 @@ class DriverController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
- }
-}
+        }
+    }
+
+    public function showSetorSampahDetail($id)
+    {
+        $setorSampah = SetorSampah::with(['user', 'setorItems.jenisSampah'])
+            ->findOrFail($id);
+
+        // Pastikan driver hanya bisa melihat detail pesanan yang statusnya menunggu atau yang dia handle
+        if ($setorSampah->status !== SetorSampah::STATUS_MENUNGGU && $setorSampah->driver_id !== Auth::id()) {
+            return redirect()->back()->with('error', 'Anda tidak memiliki akses ke detail pesanan ini.');
+        }
+
+        return view('driver.setor_sampah_detail', compact('setorSampah'));
+    }
 }
